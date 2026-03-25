@@ -908,7 +908,7 @@ const State = {
    API LAYER  (production: replace mock with real fetch)
    ═══════════════════════════════════════════════════ */
 const API = {
-  // ←←←←← 这里改成你 Supabase 的地址（从图片里复制）
+  // 你的 Supabase 项目地址
   base: 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1',
 
   async get(path) {
@@ -916,22 +916,32 @@ const API = {
       const response = await fetch(this.base + path, {
         method: 'GET',
         headers: {
-          'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',   // ←←←←← 这里填你的 Publishable Key（从图片里复制完整的那一长串）
-          'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'  // 也填同一个 Key
+          'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',        // ← 你的 Publishable Key
+          'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'
         }
       });
 
       if (!response.ok) {
         console.warn('Supabase 返回错误:', response.status);
-        return MOCK[path] || {};   // 出错了就用原来的假数据，不让页面崩溃
+        return MOCK[path] || {};
       }
 
       return await response.json();
     } catch (error) {
       console.error('请求 Supabase 失败:', error);
-      return MOCK[path] || {};   // 网络问题也 fallback 到假数据
+      return MOCK[path] || {};   // 出问题时 fallback 到假数据
     }
   },
+
+  // 下面路径与你的表名保持一致
+  getJobs:    () => API.get('/jobs'),
+  getLive:    () => API.get('/live'),
+  getGithub:  () => API.get('/github'),
+  getKeywords:() => API.get('/keywords'),
+  getHotspot: () => API.get('/hotspot'),
+  getVideos:  () => API.get('/video'),
+  getAlerts:  () => API.get('/alerts'),
+};
 
   // 下面这几行保持不变
   getJobs:    () => API.get('/jobs'),      // 注意这里改成了 /jobs （表名）
