@@ -22,7 +22,6 @@
 html,body{height:100%;overflow:hidden;font-size:12px;font-family:var(--font-cn)}
 body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(59,130,246,0.05) 0%,transparent 60%);}
 
-/* SCROLLBAR */
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.3);border-radius:2px}
@@ -46,12 +45,12 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
 .chip-edu{border-color:rgba(59,130,246,.3);color:var(--blue);background:rgba(59,130,246,.07)}
 #tb-clock{font-family:var(--font-m);font-size:11px;color:var(--text-1);letter-spacing:.5px}
 
-/* ALERT BANNER */
+/* ALERT */
 #alert-banner{position:fixed;top:var(--top-h);left:0;right:0;z-index:190;background:rgba(244,63,94,0.1);border-bottom:1px solid rgba(244,63,94,.25);padding:5px 20px;display:none;align-items:center;gap:10px;font-size:11px;font-family:var(--font-m);color:var(--red);backdrop-filter:blur(8px);}
 #alert-banner.show{display:flex;animation:slideDown .3s ease}
 @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:none;opacity:1}}
 
-/* MAIN LAYOUT */
+/* LAYOUT */
 #app{position:fixed;top:var(--top-h);left:0;right:0;bottom:var(--bot-h);display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);gap:0;overflow:hidden;}
 .col{display:flex;flex-direction:column;gap:0;overflow:hidden;background:var(--bg-1);}
 .col-l{border-right:1px solid var(--border)}
@@ -114,7 +113,6 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
 .live-total{margin-top:8px;padding:6px 8px;background:var(--bg-0);border-radius:4px;display:flex;align-items:center;gap:8px;}
 .lt-val{font-family:var(--font-m);font-size:16px;font-weight:600;color:var(--text-0)}
 .lt-lbl{font-size:9.5px;color:var(--text-2)}
-.lt-trend{font-size:10px;color:var(--green);margin-left:auto}
 
 /* KEYWORDS */
 .kw-table{width:100%;border-collapse:collapse;font-size:10.5px}
@@ -131,51 +129,37 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
 #map-center{position:relative;overflow:hidden;background:var(--bg-0);border-left:1px solid var(--border);border-right:1px solid var(--border);}
 #globe-canvas{display:block;width:100%;height:100%}
 
-/* RIGHT COLUMN */
-.is-title{font-family:var(--font-h);font-size:10px;font-weight:600;letter-spacing:1px;color:var(--text-2);text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-bottom:6px;margin-top:8px;}
-.is-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.trend-row{margin-bottom:5px}
-.tr-lbl{display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px}
-.tr-track{height:3.5px;background:var(--bg-0);border-radius:2px;overflow:hidden}
-.tr-fill{height:100%;border-radius:2px;transition:width 1s ease}
-.tf-pos{background:linear-gradient(90deg,var(--blue),var(--cyan))}
-.tf-neg{background:linear-gradient(90deg,var(--red),var(--amber))}
-
-/* BOTTOM STRIP */
+/* BOTTOM */
 #bot-strip{position:fixed;bottom:var(--bot-h);left:0;right:0;z-index:150;height:200px;background:rgba(4,8,16,0.95);border-top:1px solid var(--border);display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);backdrop-filter:blur(12px);transition:transform .3s ease;}
 .bs-panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border);}
 .bs-hdr{display:flex;align-items:center;gap:7px;padding:7px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
 .bs-body{padding:8px 10px;overflow-y:auto;flex:1}
 
-/* STATUS BAR */
+#bot-toggle{position:fixed;bottom:calc(var(--bot-h)+4px);right:14px;z-index:160;padding:4px 12px;border-radius:3px;background:rgba(4,8,16,0.88);border:1px solid var(--border);font-family:var(--font-m);font-size:9.5px;color:var(--text-1);cursor:pointer;transition:all .15s;}
+#bot-toggle:hover{color:var(--text-0);border-color:var(--border-h)}
+
 #statusbar{position:fixed;bottom:0;left:0;right:0;z-index:200;height:var(--bot-h);background:rgba(4,8,16,0.98);border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 14px;font-family:var(--font-m);font-size:9.5px;color:var(--text-2);}
 </style>
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
+<!-- LOADING -->
 <div id="loader">
   <div class="loader-logo">EDU<em>MONITOR</em></div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
   <div class="loader-txt" id="loader-txt">CONNECTING TO SUPABASE...</div>
 </div>
 
-<!-- NOTIFICATIONS -->
 <div id="notif"></div>
 
-<!-- ALERT BANNER -->
 <div id="alert-banner">
   <span class="alert-icon">⚠</span>
-  <span id="alert-text">异常预警：AI教研岗位激增 +40%，超过预警阈值</span>
+  <span id="alert-text"></span>
   <span style="margin-left:auto;cursor:pointer;opacity:.6" onclick="dismissAlert()">✕</span>
 </div>
 
-<!-- TOPBAR -->
 <div id="topbar">
-  <div class="tb-logo">
-    <div class="pulse-dot"></div>
-    EDU<em>MONITOR</em>
-  </div>
+  <div class="tb-logo"><div class="pulse-dot"></div>EDU<em>MONITOR</em></div>
   <div class="tb-sep"></div>
   <div class="tb-stat">监控模块 <span class="tv">8</span></div>
   <div class="tb-sep"></div>
@@ -191,41 +175,19 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
   </div>
 </div>
 
-<!-- MAIN APP AREA -->
 <div id="app">
   <!-- LEFT COLUMN -->
   <div class="col col-l" style="overflow-y:auto">
-    <!-- Overview -->
     <div id="overview">
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-jobs" style="color:var(--blue)">0</div>
-        <div class="ov-lbl">今日岗位</div>
-        <div class="ov-delta d-up" id="ov-jobs-d">↑ 0</div>
-      </div>
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-live" style="color:var(--red)">0</div>
-        <div class="ov-lbl">直播中</div>
-        <div class="ov-delta d-up">总观看 0</div>
-      </div>
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-gh" style="color:var(--amber)">0</div>
-        <div class="ov-lbl">GitHub新项目</div>
-        <div class="ov-delta d-up">↑ 0</div>
-      </div>
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-alert" style="color:var(--red)">0</div>
-        <div class="ov-lbl">异常预警</div>
-        <div class="ov-delta d-dn">0</div>
-      </div>
+      <div class="ov-cell"><div class="ov-val" id="ov-jobs" style="color:var(--blue)">0</div><div class="ov-lbl">今日岗位</div><div class="ov-delta d-up" id="ov-jobs-d">↑ 0</div></div>
+      <div class="ov-cell"><div class="ov-val" id="ov-live" style="color:var(--red)">0</div><div class="ov-lbl">直播中</div><div class="ov-delta d-up">总观看 0</div></div>
+      <div class="ov-cell"><div class="ov-val" id="ov-gh" style="color:var(--amber)">0</div><div class="ov-lbl">GitHub新项目</div><div class="ov-delta d-up">↑ 0</div></div>
+      <div class="ov-cell"><div class="ov-val" id="ov-alert" style="color:var(--red)">0</div><div class="ov-lbl">异常预警</div><div class="ov-delta d-dn">0</div></div>
     </div>
 
-    <!-- JOBS PANEL -->
+    <!-- JOBS -->
     <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">💼</div>
-        <div class="ph-title">就业平台</div>
-        <div class="ph-badge b-ok" id="jp-badge">+0</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">💼</div><div class="ph-title">就业平台</div><div class="ph-badge b-ok" id="jp-badge">+0</div></div>
       <div class="panel-body" style="max-height:320px">
         <div class="job-filters" id="jfilters">
           <div class="jf active" data-f="all" onclick="filterJ('all',this)">全部</div>
@@ -235,25 +197,17 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
       </div>
     </div>
 
-    <!-- LIVE PANEL -->
+    <!-- LIVE -->
     <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">📡</div>
-        <div class="ph-title">品牌直播</div>
-        <div class="ph-badge b-live" id="lp-badge">● LIVE 0</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">📡</div><div class="ph-title">品牌直播</div><div class="ph-badge b-live" id="lp-badge">● LIVE 0</div></div>
       <div class="panel-body" style="max-height:250px">
         <div id="live-rows">加载中...</div>
       </div>
     </div>
 
-    <!-- KEYWORDS PANEL -->
+    <!-- KEYWORDS -->
     <div class="panel" style="flex:1 1 0;min-height:0">
-      <div class="panel-hdr">
-        <div class="ph-icon">🎯</div>
-        <div class="ph-title">关键词</div>
-        <div class="ph-badge b-ai">竞品雷达</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">🎯</div><div class="ph-title">关键词</div><div class="ph-badge b-ai">竞品雷达</div></div>
       <div class="panel-body" style="overflow:hidden;padding-top:6px">
         <table class="kw-table">
           <thead><tr><th>关键词</th><th>热度</th><th>出价</th><th>变化</th></tr></thead>
@@ -263,28 +217,23 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
     </div>
   </div>
 
-  <!-- CENTER MAP -->
+  <!-- MAP -->
   <div id="map-center">
     <canvas id="globe-canvas"></canvas>
   </div>
 
-  <!-- RIGHT COLUMN -->
+  <!-- RIGHT -->
   <div class="col col-r" style="overflow-y:auto">
-    <!-- AI INSIGHT -->
     <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">🧠</div>
-        <div class="ph-title">AI洞察</div>
-        <div class="ph-badge b-ai">GPT-4o</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">🧠</div><div class="ph-title">AI洞察</div><div class="ph-badge b-ai">GPT-4o</div></div>
       <div class="panel-body" style="max-height:310px">
-        <div style="color:var(--text-1);padding:20px;text-align:center;">AI洞察模块加载中...</div>
+        <div style="padding:20px;color:var(--text-1);text-align:center;">AI洞察模块加载中...</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- BOTTOM STRIP -->
+<!-- BOTTOM -->
 <div id="bot-strip">
   <div class="bs-panel">
     <div class="bs-hdr"><span>🔥</span>GitHub Trending</div>
@@ -294,35 +243,27 @@ body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient
 
 <div id="bot-toggle" onclick="toggleBot()">▼ 面板</div>
 
-<!-- STATUS BAR -->
 <div id="statusbar">
   <div class="sb-item"><span class="sg">●</span> Supabase <span class="sg" id="supabase-status">CONNECTING</span></div>
 </div>
 
 <script>
-/* STATE MANAGEMENT */
+/* STATE */
 const State = {
   jobs: [], jobFilter: 'all',
   live: [], liveTotal: 0,
   github: [], ghTab: 'trending',
   keywords: [], kwTab: 'bid',
-  hotspot: {}, hsTab: 'hot',
-  videos: {}, vidTab: 'dy',
-  aiCards: [], activeTags: new Set(['教育','AI','直播']),
-  layers: { jobs:true, live:true, hubs:true, keywords:false, flow:false },
-  timeRange: '1d',
-  alerts: [],
   botOpen: true,
 };
 
-/* API LAYER */
+/* API */
 const API = {
   base: 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1',
 
   async get(path) {
     try {
       const response = await fetch(this.base + path, {
-        method: 'GET',
         headers: {
           'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',
           'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'
@@ -330,39 +271,28 @@ const API = {
       });
 
       if (!response.ok) {
-        console.error(`❌ ${path} 返回 401/403 - 请确认 RLS 已关闭`);
-        document.getElementById('supabase-status').textContent = 'RLS 未关闭';
+        console.error(`❌ ${path} 返回 401/403 - RLS 未关闭或权限不足`);
+        document.getElementById('supabase-status').innerHTML = 'RLS 未关闭';
         document.getElementById('supabase-status').style.color = 'var(--red)';
         return [];
       }
 
       const data = await response.json();
-      console.log(`✅ ${path} 获取成功 (${data.length} 条)`);
+      console.log(`✅ ${path} 成功 (${data.length} 条)`);
       return data;
-    } catch (error) {
-      console.error(`❌ 请求 ${path} 失败`, error);
+    } catch (e) {
+      console.error(`请求失败 ${path}`, e);
       return [];
     }
   },
 
-  getJobs:    () => API.get('/jobs'),
-  getLive:    () => API.get('/live'),
-  getGithub:  () => API.get('/github'),
-  getKeywords:() => API.get('/keywords'),
-  getHotspot: () => API.get('/hotspot'),
-  getVideos:  () => API.get('/video'),
-  getAlerts:  () => API.get('/alerts'),
+  getJobs: () => API.get('/jobs'),
+  getLive: () => API.get('/live'),
+  getGithub: () => API.get('/github'),
+  getKeywords: () => API.get('/keywords'),
 };
 
-/* MODULES */
-const Modules = [
-  { id:'jobs',     api:API.getJobs,     render:renderJobs },
-  { id:'live',     api:API.getLive,     render:renderLive },
-  { id:'github',   api:API.getGithub,   render:renderGithub },
-  { id:'keywords', api:API.getKeywords, render:renderKeywords },
-];
-
-/* RENDER FUNCTIONS */
+/* RENDER */
 function renderJobs(data) {
   State.jobs = Array.isArray(data) ? data : [];
   const html = State.jobs.slice(0,6).map(j => `
@@ -387,8 +317,9 @@ function renderLive(data) {
 
 function renderGithub(data) {
   State.github = Array.isArray(data) ? data : [];
-  const view = document.getElementById('gh-view');
-  view.innerHTML = State.github.length ? State.github.map(r => `<div class="gh-row"><div style="font-size:11px;color:var(--blue)">${r.repo || '未知仓库'}</div></div>`).join('') : '暂无 GitHub 数据';
+  document.getElementById('gh-view').innerHTML = State.github.length 
+    ? State.github.map(r => `<div class="gh-row"><div style="font-size:11px;color:var(--blue)">${r.repo || '未知仓库'}</div></div>`).join('') 
+    : '暂无 GitHub 数据';
 }
 
 function renderKeywords(data) {
@@ -399,23 +330,38 @@ function renderKeywords(data) {
   document.getElementById('kw-tbody').innerHTML = html || '<tr><td colspan="4">暂无关键词数据</td></tr>';
 }
 
+function filterJ(f, el) {
+  State.jobFilter = f;
+  document.querySelectorAll('#jfilters .jf').forEach(e => e.classList.remove('active'));
+  el.classList.add('active');
+  renderJobs(State.jobs);
+}
+
+function toggleBot() {
+  State.botOpen = !State.botOpen;
+  document.getElementById('bot-strip').classList.toggle('collapsed', !State.botOpen);
+}
+
 /* BOOTSTRAP */
 async function bootstrap() {
   const lt = document.getElementById('loader-txt');
-  const steps = ['连接 Supabase...', '加载岗位数据...', '加载直播数据...', '加载关键词...', '启动完成'];
-  for (let step of steps) {
-    lt.textContent = step;
+  const steps = ['连接 Supabase...', '加载岗位...', '加载直播...', '加载关键词...', '系统就绪'];
+  for (let s of steps) {
+    lt.textContent = s;
     await new Promise(r => setTimeout(r, 400));
   }
 
-  for (let m of Modules) {
-    try {
-      const data = await m.api();
-      m.render(data);
-    } catch(e) {
-      console.warn(`${m.id} 加载失败`, e);
-    }
-  }
+  const jobsData = await API.getJobs();
+  renderJobs(jobsData);
+
+  const liveData = await API.getLive();
+  renderLive(liveData);
+
+  const githubData = await API.getGithub();
+  renderGithub(githubData);
+
+  const keywordsData = await API.getKeywords();
+  renderKeywords(keywordsData);
 
   const loader = document.getElementById('loader');
   loader.style.opacity = '0';
