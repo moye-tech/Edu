@@ -69,7 +69,7 @@ const State = {
 };
 
 /* ═══════════════════════════════════════════════════
-   API LAYER — Supabase（已优化）
+   API LAYER — Supabase（使用 Legacy anon public key）
    ═══════════════════════════════════════════════════ */
 const API = {
   base: 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1',
@@ -79,14 +79,16 @@ const API = {
       const response = await fetch(this.base + path, {
         method: 'GET',
         headers: {
-          'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',
-          'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'
+          // ←←← 这里粘贴你的 anon public key
+          'apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhhYW53bHdqdW1wY3l5cmRvZXlnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQzODgxODUsImV4cCI6MjA4OTk2NDE4NX0.yUspkn16fBQjRxNbiA3jdqAbmy63XWMyr_V-TbJ1pZs',   
+          'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...'  
         }
       });
 
       if (!response.ok) {
-        console.error(`❌ ${path} 请求失败:`, response.status);
-        return MOCK[path.replace('/','/edu/')] || [];
+        const errorText = await response.text();
+        console.error(`❌ ${path} 请求失败 ${response.status}:`, errorText);
+        return [];
       }
 
       const data = await response.json();
@@ -94,7 +96,7 @@ const API = {
       return data;
     } catch (error) {
       console.error(`❌ 请求 ${path} 失败:`, error);
-      return MOCK[path.replace('/','/edu/')] || [];
+      return [];
     }
   },
 
@@ -106,7 +108,6 @@ const API = {
   getVideos:  () => API.get('/video'),
   getAlerts:  () => API.get('/alerts'),
 };
-
 /* ═══════════════════════════════════════════════════
    MODULE CONFIG
    ═══════════════════════════════════════════════════ */
