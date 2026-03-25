@@ -6,9 +6,6 @@
 <title>Edu Monitor v2 · 教育行业实时情报台</title>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════════
-   DESIGN SYSTEM — TACTICAL INTELLIGENCE AESTHETIC
-   ═══════════════════════════════════════════════ */
 :root {
   --bg-0:#040810; --bg-1:#070d1a; --bg-2:#0c1426; --bg-3:#101c34;
   --panel:#08111f; --panel-b:rgba(8,17,31,0.92);
@@ -19,110 +16,38 @@
   --text-0:#eef4ff; --text-1:#8ca0be; --text-2:#3d5070;
   --font-h:'Rajdhani',sans-serif; --font-m:'JetBrains Mono',monospace;
   --font-cn:'Noto Sans SC',sans-serif;
-  --panel-w:270px; --top-h:46px; --bot-h:26px;
-  --r:5px;
+  --panel-w:270px; --top-h:46px; --bot-h:26px; --r:5px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;font-size:12px;font-family:var(--font-cn)}
-body{
-  background:var(--bg-0);color:var(--text-0);
-  background-image: radial-gradient(ellipse 60% 40% at 50% 0%,rgba(59,130,246,0.05) 0%,transparent 60%);
-}
-
-/* SCROLLBAR */
+body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(59,130,246,0.05) 0%,transparent 60%);}
 ::-webkit-scrollbar{width:3px;height:3px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.3);border-radius:2px}
 
-/* TOP BAR */
-#topbar{
-  position:fixed;top:0;left:0;right:0;z-index:200;height:var(--top-h);
-  background:rgba(4,8,16,0.97);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;padding:0 14px;gap:14px;
-  backdrop-filter:blur(16px);
-}
-.tb-logo{
-  display:flex;align-items:center;gap:8px;
-  font-family:var(--font-h);font-size:19px;font-weight:700;
-  letter-spacing:2.5px;color:var(--blue);text-transform:uppercase;
-  white-space:nowrap;
-}
+#topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--top-h);background:rgba(4,8,16,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:14px;backdrop-filter:blur(16px);}
+.tb-logo{display:flex;align-items:center;gap:8px;font-family:var(--font-h);font-size:19px;font-weight:700;letter-spacing:2.5px;color:var(--blue);text-transform:uppercase;}
 .tb-logo em{color:var(--text-0);font-style:normal}
-.pulse-dot{
-  width:7px;height:7px;border-radius:50%;background:var(--green);
-  box-shadow:0 0 8px var(--green);
-  animation:pdot 2s infinite;
-}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pdot 2s infinite;}
 @keyframes pdot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.5}}
 .tb-sep{width:1px;height:20px;background:var(--border)}
-.tb-stat{
-  display:flex;align-items:center;gap:5px;
-  font-family:var(--font-m);font-size:10.5px;color:var(--text-1);
-  white-space:nowrap;
-}
+.tb-stat{display:flex;align-items:center;gap:5px;font-family:var(--font-m);font-size:10.5px;color:var(--text-1);white-space:nowrap;}
 .tv{color:var(--text-0);font-weight:500}
 .tv-r{color:var(--red)}
 .tv-g{color:var(--green)}
 .tv-a{color:var(--amber)}
 .tb-right{margin-left:auto;display:flex;align-items:center;gap:10px}
-.chip{
-  padding:2px 8px;border-radius:3px;
-  font-family:var(--font-m);font-size:9.5px;font-weight:600;
-  letter-spacing:1px;border:1px solid;cursor:default;
-}
+.chip{padding:2px 8px;border-radius:3px;font-family:var(--font-m);font-size:9.5px;font-weight:600;letter-spacing:1px;border:1px solid;cursor:default;}
 .chip-live{border-color:rgba(244,63,94,.4);color:var(--red);background:rgba(244,63,94,.08);animation:chipblink 2s infinite}
 @keyframes chipblink{0%,100%{opacity:1}50%{opacity:.6}}
 .chip-edu{border-color:rgba(59,130,246,.3);color:var(--blue);background:rgba(59,130,246,.07)}
 #tb-clock{font-family:var(--font-m);font-size:11px;color:var(--text-1);letter-spacing:.5px}
 
-/* ALERT BANNER */
-#alert-banner{
-  position:fixed;top:var(--top-h);left:0;right:0;z-index:190;
-  background:rgba(244,63,94,0.1);border-bottom:1px solid rgba(244,63,94,.25);
-  padding:5px 20px;display:none;align-items:center;gap:10px;
-  font-size:11px;font-family:var(--font-m);color:var(--red);
-  backdrop-filter:blur(8px);
-}
+#alert-banner{position:fixed;top:var(--top-h);left:0;right:0;z-index:190;background:rgba(244,63,94,0.1);border-bottom:1px solid rgba(244,63,94,.25);padding:5px 20px;display:none;align-items:center;gap:10px;font-size:11px;font-family:var(--font-m);color:var(--red);backdrop-filter:blur(8px);}
 #alert-banner.show{display:flex;animation:slideDown .3s ease}
 @keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:none;opacity:1}}
-.alert-icon{animation:pdot 1s infinite;font-size:13px}
 
-/* MAIN LAYOUT */
-#app{
-  position:fixed;top:var(--top-h);left:0;right:0;bottom:var(--bot-h);
-  display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);gap:0;overflow:hidden;
-}
-
-/* MAP CENTER */
-#map-center{position:relative;overflow:hidden;background:var(--bg-0);border-left:1px solid var(--border);border-right:1px solid var(--border);}
-#globe-canvas{display:block;width:100%;height:100%}
-
-/* LAYER STRIP */
-#layer-strip{
-  position:absolute;bottom:10px;left:50%;transform:translateX(-50%);
-  display:flex;gap:5px;align-items:center;background:rgba(4,8,16,0.88);border:1px solid var(--border);
-  border-radius:20px;padding:5px 12px;backdrop-filter:blur(10px);
-}
-.layer-btn{
-  display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:12px;cursor:pointer;
-  font-size:10px;color:var(--text-1);border:1px solid transparent;transition:all .18s;
-  font-family:var(--font-cn);white-space:nowrap;
-}
-.layer-btn.on{color:var(--text-0);border-color:var(--border-h);background:var(--blue-g)}
-.layer-btn .lb-dot{width:6px;height:6px;border-radius:50%}
-
-/* MAP STATS */
-#map-stats{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;}
-.mstat{background:rgba(4,8,16,0.82);border:1px solid var(--border);padding:5px 10px;border-radius:4px;font-family:var(--font-m);font-size:10px;display:flex;align-items:center;gap:7px;backdrop-filter:blur(8px);}
-.mstat-val{font-size:15px;font-weight:600;color:var(--text-0)}
-.mstat-lbl{color:var(--text-1)}
-
-/* TIME RANGE */
-#time-range{position:absolute;top:10px;right:10px;display:flex;gap:4px;background:rgba(4,8,16,0.82);border:1px solid var(--border);padding:3px;border-radius:4px;backdrop-filter:blur(8px);}
-.tr-btn{padding:3px 9px;border-radius:3px;font-family:var(--font-m);font-size:9.5px;color:var(--text-2);cursor:pointer;transition:all .15s;}
-.tr-btn.active{background:var(--bg-3);color:var(--text-0)}
-
-/* PANELS */
+#app{position:fixed;top:var(--top-h);left:0;right:0;bottom:var(--bot-h);display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);gap:0;overflow:hidden;}
 .col{display:flex;flex-direction:column;gap:0;overflow:hidden;background:var(--bg-1);}
 .col-l{border-right:1px solid var(--border)}
 .col-r{border-left:1px solid var(--border)}
@@ -135,15 +60,12 @@ body{
 .b-live{border-color:rgba(244,63,94,.4);color:var(--red);background:rgba(244,63,94,.08)}
 .b-ai{border-color:rgba(139,92,246,.35);color:var(--purple);background:rgba(139,92,246,.07)}
 .b-ok{border-color:rgba(16,185,129,.35);color:var(--green);background:rgba(16,185,129,.07)}
-.b-warn{border-color:rgba(245,158,11,.35);color:var(--amber);background:rgba(245,158,11,.07)}
 .panel-body{padding:9px 10px;overflow-y:auto;flex:1}
 
-/* TABS */
 .tabs{display:flex;gap:2px;background:var(--bg-0);border-radius:4px;padding:2px;margin-bottom:8px}
 .tab{flex:1;padding:4px;text-align:center;font-size:10.5px;color:var(--text-2);cursor:pointer;border-radius:3px;transition:all .15s;font-family:var(--font-cn);}
 .tab.active{background:var(--bg-3);color:var(--text-0)}
 
-/* OVERVIEW */
 #overview{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-bottom:1px solid var(--border);flex-shrink:0;}
 .ov-cell{background:var(--bg-1);padding:8px 10px;display:flex;flex-direction:column;gap:2px;cursor:default;transition:background .15s;}
 .ov-cell:hover{background:var(--bg-2)}
@@ -152,7 +74,6 @@ body{
 .ov-delta{font-family:var(--font-m);font-size:9px;margin-top:2px}
 .d-up{color:var(--green)} .d-dn{color:var(--red)}
 
-/* JOBS PANEL */
 .job-filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px}
 .jf{padding:2px 8px;border-radius:3px;font-size:10px;cursor:pointer;border:1px solid var(--border);color:var(--text-1);transition:all .13s;}
 .jf.active{background:var(--blue-g);border-color:var(--blue);color:var(--blue)}
@@ -170,7 +91,6 @@ body{
 .ji-sal{color:var(--amber)}
 .ji-tag{font-size:9px;padding:0 4px;border-radius:2px;background:rgba(59,130,246,.08);color:var(--blue);}
 
-/* LIVE PANEL */
 .live-row{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:3px;background:var(--bg-2);border:1px solid var(--border);transition:border-color .13s;}
 .live-row:hover{border-color:var(--border-h)}
 .ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
@@ -183,13 +103,10 @@ body{
 .live-plt{font-family:var(--font-m);font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px;}
 .pdy{background:#010101;color:#fe2c55}
 .pbl{background:rgba(0,161,214,.15);color:#00a1d6}
-.pwx{background:rgba(7,193,96,.12);color:#07c160}
 .live-total{margin-top:8px;padding:6px 8px;background:var(--bg-0);border-radius:4px;display:flex;align-items:center;gap:8px;}
 .lt-val{font-family:var(--font-m);font-size:16px;font-weight:600;color:var(--text-0)}
 .lt-lbl{font-size:9.5px;color:var(--text-2)}
-.lt-trend{font-size:10px;color:var(--green);margin-left:auto}
 
-/* KEYWORDS PANEL */
 .kw-table{width:100%;border-collapse:collapse;font-size:10.5px}
 .kw-table th{text-align:left;padding:3px 5px;font-family:var(--font-m);font-size:8.5px;color:var(--text-2);border-bottom:1px solid var(--border);letter-spacing:.5px;text-transform:uppercase;}
 .kw-table td{padding:4px 5px;border-bottom:1px solid rgba(59,130,246,.04)}
@@ -200,176 +117,69 @@ body{
 .kd{color:var(--red);font-family:var(--font-m);font-size:9.5px}
 .kf{color:var(--text-2);font-family:var(--font-m);font-size:9.5px}
 
-.radar-container{display:flex;align-items:center;justify-content:center;gap:10px;padding:4px 0}
-.radar-leg{display:flex;flex-direction:column;gap:4px}
-.rl-item{display:flex;align-items:center;gap:5px;font-size:9.5px;color:var(--text-1);cursor:pointer}
-.rl-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+#map-center{position:relative;overflow:hidden;background:var(--bg-0);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+#globe-canvas{display:block;width:100%;height:100%}
 
-/* RIGHT COLUMN — AI INSIGHT */
-.is-title{font-family:var(--font-h);font-size:10px;font-weight:600;letter-spacing:1px;color:var(--text-2);text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-bottom:6px;margin-top:8px;}
-.is-title:first-child{margin-top:0}
-.is-title::after{content:'';flex:1;height:1px;background:var(--border)}
-.trend-row{margin-bottom:5px}
-.tr-lbl{display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px}
-.tr-name{color:var(--text-1)} .tr-val{font-family:var(--font-m)}
-.tr-track{height:3.5px;background:var(--bg-0);border-radius:2px;overflow:hidden}
-.tr-fill{height:100%;border-radius:2px;transition:width 1s ease}
-.tf-pos{background:linear-gradient(90deg,var(--blue),var(--cyan))}
-.tf-neg{background:linear-gradient(90deg,var(--red),var(--amber))}
-.inv-row{display:flex;align-items:center;gap:6px;padding:5px 7px;border-radius:3px;border:1px solid;margin-bottom:4px;font-size:10.5px;}
-.ir-bull{border-color:rgba(16,185,129,.25);background:rgba(16,185,129,.05)}
-.ir-neut{border-color:rgba(245,158,11,.25);background:rgba(245,158,11,.05)}
-.ir-bear{border-color:rgba(244,63,94,.25);background:rgba(244,63,94,.05)}
-.ir-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.insight-item{display:flex;gap:6px;font-size:10.5px;margin-bottom:3px}
-.ii-num{font-family:var(--font-m);font-size:9.5px;color:var(--blue);flex-shrink:0;margin-top:1px}
-.ii-txt{color:var(--text-1);line-height:1.5}
-.risk-row{display:flex;gap:5px;font-size:10.5px;color:var(--text-1);margin-bottom:3px}
-.rb{color:var(--amber);flex-shrink:0}
-.is-ts{font-family:var(--font-m);font-size:8.5px;color:var(--text-2);text-align:right;margin-top:6px}
+#map-stats{position:absolute;top:10px;left:10px;display:flex;flex-direction:column;gap:5px;}
+.mstat{background:rgba(4,8,16,0.82);border:1px solid var(--border);padding:5px 10px;border-radius:4px;font-family:var(--font-m);font-size:10px;display:flex;align-items:center;gap:7px;backdrop-filter:blur(8px);}
+.mstat-val{font-size:15px;font-weight:600;color:var(--text-0)}
+.mstat-lbl{color:var(--text-1)}
 
-/* HOTSPOT */
-.hs-item{display:flex;align-items:flex-start;gap:6px;padding:5px 6px;border-radius:3px;background:var(--bg-2);border:1px solid var(--border);margin-bottom:3px;cursor:pointer;transition:border-color .13s;}
-.hs-item:hover{border-color:var(--border-h)}
-.hs-rank{font-family:var(--font-m);font-size:10px;color:var(--text-2);width:14px;flex-shrink:0;text-align:center;margin-top:1px}
-.hs-rank.top{color:var(--amber);font-weight:600}
-.hs-body{flex:1;min-width:0}
-.hs-title{font-size:10.5px;line-height:1.4;margin-bottom:2px}
-.hs-meta{display:flex;gap:6px;font-family:var(--font-m);font-size:9px;color:var(--text-2)}
-.hs-src{padding:0 3px;border-radius:2px;background:var(--bg-0);font-size:8.5px;color:var(--text-2);}
-.hs-score{font-family:var(--font-m);font-size:10px;font-weight:600;flex-shrink:0;margin-top:1px}
-.sent-bar{margin-top:7px;padding:6px 8px;background:var(--bg-0);border-radius:3px;}
-.sb-l{font-size:9.5px;color:var(--text-2);margin-bottom:4px}
-.sb-track{height:4px;border-radius:2px;overflow:hidden;display:flex;gap:1px}
-.sbp{background:var(--green)} .sbn{background:var(--red)} .sbu{background:var(--text-2)}
-.sb-pct{display:flex;gap:10px;margin-top:3px;font-family:var(--font-m);font-size:9px}
+#time-range{position:absolute;top:10px;right:10px;display:flex;gap:4px;background:rgba(4,8,16,0.82);border:1px solid var(--border);padding:3px;border-radius:4px;backdrop-filter:blur(8px);}
+.tr-btn{padding:3px 9px;border-radius:3px;font-family:var(--font-m);font-size:9.5px;color:var(--text-2);cursor:pointer;transition:all .15s;}
+.tr-btn.active{background:var(--bg-3);color:var(--text-0)}
 
-/* VIDEO */
-.vid-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
-.vid-card{background:var(--bg-2);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:border-color .13s;cursor:pointer;}
-.vid-card:hover{border-color:var(--border-h)}
-.vid-thumb{height:56px;background:var(--bg-3);position:relative;display:flex;align-items:center;justify-content:center;font-size:22px;}
-.vid-thumb::after{content:'▶';position:absolute;font-size:14px;color:rgba(255,255,255,.6);text-shadow:0 1px 6px rgba(0,0,0,.5);}
-.vid-plt{position:absolute;top:3px;right:3px;font-family:var(--font-m);font-size:7.5px;font-weight:700;padding:1px 4px;border-radius:2px;}
-.vdy{background:#010101;color:#fe2c55}
-.vbl{background:rgba(0,161,214,.8);color:#fff}
-.vxhs{background:rgba(254,45,84,.8);color:#fff}
-.vwb{background:rgba(230,22,45,.8);color:#fff}
-.vid-info{padding:5px 6px}
-.vid-title{font-size:9.5px;line-height:1.4;margin-bottom:3px;color:var(--text-0)}
-.vid-meta{display:flex;gap:5px;font-family:var(--font-m);font-size:8.5px;color:var(--text-2)}
-
-/* BOTTOM STRIP */
-#bot-strip{
-  position:fixed;bottom:var(--bot-h);left:0;right:0;z-index:150;height:200px;
-  background:rgba(4,8,16,0.95);border-top:1px solid var(--border);
-  display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);
-  backdrop-filter:blur(12px);transition:transform .3s ease;
-}
+#bot-strip{position:fixed;bottom:var(--bot-h);left:0;right:0;z-index:150;height:200px;background:rgba(4,8,16,0.95);border-top:1px solid var(--border);display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);backdrop-filter:blur(12px);transition:transform .3s ease;}
 #bot-strip.collapsed{transform:translateY(100%)}
 .bs-panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border);}
-.bs-panel:last-child{border-right:none;border-left:1px solid var(--border)}
 .bs-hdr{display:flex;align-items:center;gap:7px;padding:7px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
 .bs-body{padding:8px 10px;overflow-y:auto;flex:1}
 
-/* GITHUB */
 .gh-row{display:flex;align-items:flex-start;gap:7px;padding:5px 6px;background:var(--bg-2);border:1px solid var(--border);border-left:2px solid var(--border);border-radius:3px;margin-bottom:4px;transition:all .13s;cursor:pointer;}
 .gh-row:hover{border-left-color:var(--blue);border-color:var(--border-h)}
 .gh-repo{font-family:var(--font-m);font-size:10px;color:var(--blue);flex:1}
 .gh-stars{font-family:var(--font-m);font-size:9.5px;color:var(--amber)}
-.gh-lang{font-family:var(--font-m);font-size:8.5px;padding:0 4px;border-radius:2px}
-.gh-summary{font-size:9.5px;color:var(--text-1);margin-top:3px;line-height:1.4}
-.gh-mkt{display:flex;gap:6px;margin-top:4px}
-.gm{display:flex;align-items:center;gap:3px;padding:1px 5px;border-radius:3px;background:var(--bg-0);border:1px solid var(--border);font-size:9px;color:var(--text-1);}
-.gm b{color:var(--text-0);font-family:var(--font-m);font-weight:500}
 
-/* AI CARDS */
 .ai-card-stream{display:flex;gap:6px;height:100%;overflow-x:auto;align-items:flex-start;padding-bottom:4px;}
-.aic{flex-shrink:0;width:160px;background:var(--bg-2);border:1px solid var(--border);border-top:2px solid;border-radius:4px;padding:7px 8px;animation:aic-in .3s ease;}
-@keyframes aic-in{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
+.aic{flex-shrink:0;width:160px;background:var(--bg-2);border:1px solid var(--border);border-top:2px solid;border-radius:4px;padding:7px 8px;}
 .aic-brk{border-top-color:var(--red)}
 .aic-hi{border-top-color:var(--amber)}
 .aic-md{border-top-color:var(--blue)}
 .aic-lo{border-top-color:var(--text-2)}
-.aic-src{font-family:var(--font-m);font-size:8.5px;color:var(--text-2);letter-spacing:.3px;margin-bottom:3px}
-.aic-title{font-size:10.5px;font-weight:500;margin-bottom:3px;line-height:1.3}
-.aic-body{font-size:9.5px;color:var(--text-1);line-height:1.4}
-.aic-tags{display:flex;gap:3px;margin-top:4px;flex-wrap:wrap}
-.aic-tag{font-size:8.5px;padding:0 4px;border-radius:2px;background:rgba(59,130,246,.07);color:var(--blue);font-family:var(--font-m)}
 
-/* TREND CHART */
-.chart-area{height:120px;position:relative}
-.chart-legend{display:flex;gap:10px;margin-bottom:5px;font-size:9.5px;font-family:var(--font-m)}
-.cl-item{display:flex;align-items:center;gap:4px;color:var(--text-1);cursor:pointer}
-.cl-line{width:14px;height:2px;border-radius:1px}
-
-/* BOT TOGGLE */
-#bot-toggle{position:fixed;bottom:calc(var(--bot-h) + 4px);right:14px;z-index:160;padding:4px 12px;border-radius:3px;background:rgba(4,8,16,0.88);border:1px solid var(--border);font-family:var(--font-m);font-size:9.5px;color:var(--text-1);cursor:pointer;transition:all .15s;}
+#bot-toggle{position:fixed;bottom:calc(var(--bot-h)+4px);right:14px;z-index:160;padding:4px 12px;border-radius:3px;background:rgba(4,8,16,0.88);border:1px solid var(--border);font-family:var(--font-m);font-size:9.5px;color:var(--text-1);cursor:pointer;transition:all .15s;}
 #bot-toggle:hover{color:var(--text-0);border-color:var(--border-h)}
 
-/* STATUS BAR */
 #statusbar{position:fixed;bottom:0;left:0;right:0;z-index:200;height:var(--bot-h);background:rgba(4,8,16,0.98);border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 14px;font-family:var(--font-m);font-size:9.5px;color:var(--text-2);}
-.sb-item{display:flex;align-items:center;gap:4px;white-space:nowrap}
-.sg{color:var(--green)} .sb{color:var(--blue)} .sa{color:var(--amber)} .sr{color:var(--red)}
-#ticker-wrap{margin-left:auto;overflow:hidden;max-width:420px;white-space:nowrap}
-#ticker-inner{display:inline-block;animation:tick 25s linear infinite}
-@keyframes tick{0%{transform:translateX(100%)}100%{transform:translateX(-100%)}}
-
-/* NOTIFICATIONS */
-#notif{position:fixed;top:calc(var(--top-h)+8px);right:14px;z-index:300;display:flex;flex-direction:column;gap:5px;pointer-events:none}
-.ntf{padding:7px 12px;border-radius:4px;border:1px solid;font-size:10.5px;max-width:260px;animation:ntf-in .2s ease, ntf-out .3s ease 3.8s forwards;backdrop-filter:blur(8px);}
-.ntf-live{background:rgba(244,63,94,.1);border-color:rgba(244,63,94,.3);color:var(--red)}
-.ntf-info{background:rgba(59,130,246,.1);border-color:rgba(59,130,246,.3);color:var(--blue)}
-.ntf-warn{background:rgba(245,158,11,.1);border-color:rgba(245,158,11,.3);color:var(--amber)}
-.ntf-ok{background:rgba(16,185,129,.1);border-color:rgba(16,185,129,.3);color:var(--green)}
-@keyframes ntf-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
-@keyframes ntf-out{to{opacity:0;transform:translateX(16px)}}
-
-/* LOADER */
-#loader{position:fixed;inset:0;z-index:999;background:var(--bg-0);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-.loader-logo{font-family:var(--font-h);font-size:28px;font-weight:700;letter-spacing:4px;color:var(--blue)}
-.loader-logo em{color:var(--text-0);font-style:normal}
-.loader-bar{width:200px;height:2px;background:var(--bg-2);border-radius:1px;overflow:hidden}
-.loader-fill{height:100%;background:linear-gradient(90deg,var(--blue),var(--cyan));animation:lfill 1.8s ease forwards}
-@keyframes lfill{0%{width:0}100%{width:100%}}
-.loader-txt{font-family:var(--font-m);font-size:10px;color:var(--text-2);letter-spacing:1px}
 </style>
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
+<!-- LOADING -->
 <div id="loader">
   <div class="loader-logo">EDU<em>MONITOR</em></div>
   <div class="loader-bar"><div class="loader-fill"></div></div>
   <div class="loader-txt" id="loader-txt">CONNECTING TO SUPABASE...</div>
 </div>
 
-<!-- NOTIFICATIONS -->
 <div id="notif"></div>
 
-<!-- ALERT BANNER -->
 <div id="alert-banner">
   <span class="alert-icon">⚠</span>
-  <span id="alert-text">异常预警：AI教研岗位激增 +40%，超过预警阈值</span>
+  <span id="alert-text"></span>
   <span style="margin-left:auto;cursor:pointer;opacity:.6" onclick="dismissAlert()">✕</span>
 </div>
 
-<!-- TOPBAR -->
 <div id="topbar">
-  <div class="tb-logo">
-    <div class="pulse-dot"></div>
-    EDU<em>MONITOR</em>
-  </div>
+  <div class="tb-logo"><div class="pulse-dot"></div>EDU<em>MONITOR</em></div>
   <div class="tb-sep"></div>
   <div class="tb-stat">监控模块 <span class="tv">8</span></div>
   <div class="tb-sep"></div>
   <div class="tb-stat">数据源 <span class="tv">24</span></div>
   <div class="tb-sep"></div>
-  <div class="tb-stat">直播中 <span class="tv tv-r" id="hd-live">3</span></div>
+  <div class="tb-stat">直播中 <span class="tv tv-r" id="hd-live">0</span></div>
   <div class="tb-sep"></div>
-  <div class="tb-stat">今日岗位 <span class="tv tv-g" id="hd-jobs">2,847</span></div>
-  <div class="tb-sep"></div>
-  <div class="tb-stat">⚡ 异常 <span class="tv tv-a" id="hd-alerts">2</span></div>
+  <div class="tb-stat">今日岗位 <span class="tv tv-g" id="hd-jobs">0</span></div>
   <div class="tb-right">
     <div class="chip chip-live">● LIVE</div>
     <div class="chip chip-edu">EDU · v2</div>
@@ -377,267 +187,77 @@ body{
   </div>
 </div>
 
-<!-- MAIN APP AREA -->
 <div id="app">
-
-  <!-- LEFT COLUMN -->
+  <!-- 左侧列 -->
   <div class="col col-l" style="overflow-y:auto">
     <div id="overview">
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-jobs" style="color:var(--blue)">0</div>
-        <div class="ov-lbl">今日岗位</div>
-        <div class="ov-delta d-up" id="ov-jobs-d">↑ +0 vs昨日</div>
-      </div>
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-live" style="color:var(--red)">0</div>
-        <div class="ov-lbl">直播中</div>
-        <div class="ov-delta d-up">↑ 总观看 0</div>
-      </div>
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-gh" style="color:var(--amber)">0</div>
-        <div class="ov-lbl">GitHub新项目</div>
-        <div class="ov-delta d-up">↑ +0 Stars/日</div>
-      </div>
-      <div class="ov-cell">
-        <div class="ov-val" id="ov-alert" style="color:var(--red)">0</div>
-        <div class="ov-lbl">异常预警</div>
-        <div class="ov-delta d-dn">↑ 高优先级 ×0</div>
-      </div>
+      <div class="ov-cell"><div class="ov-val" id="ov-jobs" style="color:var(--blue)">0</div><div class="ov-lbl">今日岗位</div><div class="ov-delta d-up" id="ov-jobs-d">↑ 0</div></div>
+      <div class="ov-cell"><div class="ov-val" id="ov-live" style="color:var(--red)">0</div><div class="ov-lbl">直播中</div><div class="ov-delta d-up">总观看 0</div></div>
+      <div class="ov-cell"><div class="ov-val" id="ov-gh" style="color:var(--amber)">0</div><div class="ov-lbl">GitHub新项目</div><div class="ov-delta d-up">↑ 0</div></div>
+      <div class="ov-cell"><div class="ov-val" id="ov-alert" style="color:var(--red)">0</div><div class="ov-lbl">异常预警</div><div class="ov-delta d-dn">0</div></div>
     </div>
 
-    <!-- JOBS PANEL -->
+    <!-- JOBS -->
     <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">💼</div>
-        <div class="ph-title">就业平台</div>
-        <div class="ph-badge b-ok" id="jp-badge">+0</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">💼</div><div class="ph-title">就业平台</div><div class="ph-badge b-ok" id="jp-badge">+0</div></div>
       <div class="panel-body" style="max-height:320px">
         <div class="job-filters" id="jfilters">
           <div class="jf active" data-f="all" onclick="filterJ('all',this)">全部</div>
           <div class="jf" data-f="boss" onclick="filterJ('boss',this)">BOSS</div>
-          <div class="jf" data-f="zhilian" onclick="filterJ('zhilian',this)">智联</div>
-          <div class="jf" data-f="51job" onclick="filterJ('51job',this)">前程</div>
-          <div class="jf" data-f="lagou" onclick="filterJ('lagou',this)">拉勾</div>
         </div>
-        <div class="job-list" id="job-list"></div>
-        <div class="micro-chart-wrap">
-          <div class="mc-label">
-            <span>7日发布趋势</span>
-            <span style="color:var(--green);font-family:var(--font-m);font-size:9px">↑ 周均 +18%</span>
-          </div>
-          <svg id="jobs-chart" width="100%" height="38" viewBox="0 0 240 38" preserveAspectRatio="none"></svg>
-        </div>
+        <div class="job-list" id="job-list">加载中...</div>
       </div>
     </div>
 
-    <!-- LIVE PANEL -->
+    <!-- LIVE -->
     <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">📡</div>
-        <div class="ph-title">品牌直播</div>
-        <div class="ph-badge b-live" id="lp-badge">● LIVE 0</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">📡</div><div class="ph-title">品牌直播</div><div class="ph-badge b-live" id="lp-badge">● LIVE 0</div></div>
       <div class="panel-body" style="max-height:250px">
-        <div id="live-rows"></div>
-        <div class="live-total">
-          <div><div class="lt-lbl">实时总观看</div><div class="lt-val" id="lt-val">0</div></div>
-          <div class="lt-trend" id="lt-trend">↑ +0%</div>
-        </div>
+        <div id="live-rows">加载中...</div>
       </div>
     </div>
 
-    <!-- KEYWORDS PANEL -->
+    <!-- KEYWORDS -->
     <div class="panel" style="flex:1 1 0;min-height:0">
-      <div class="panel-hdr">
-        <div class="ph-icon">🎯</div>
-        <div class="ph-title">关键词</div>
-        <div class="ph-badge b-ai">竞品雷达</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">🎯</div><div class="ph-title">关键词</div><div class="ph-badge b-ai">竞品雷达</div></div>
       <div class="panel-body" style="overflow:hidden;padding-top:6px">
-        <div class="tabs">
-          <div class="tab active" onclick="kwTab('bid',this)">投放策略</div>
-          <div class="tab" onclick="kwTab('radar',this)">竞品雷达</div>
-        </div>
-        <div id="kw-bid">
-          <table class="kw-table">
-            <thead><tr><th>关键词</th><th>热度</th><th>出价</th><th>变化</th></tr></thead>
-            <tbody id="kw-tbody"></tbody>
-          </table>
-        </div>
-        <div id="kw-radar" style="display:none">
-          <div class="radar-container">
-            <svg id="radar-svg" width="180" height="170" viewBox="0 0 180 170"></svg>
-            <div class="radar-leg" id="radar-leg"></div>
-          </div>
-        </div>
+        <table class="kw-table">
+          <thead><tr><th>关键词</th><th>热度</th><th>出价</th><th>变化</th></tr></thead>
+          <tbody id="kw-tbody">加载中...</tbody>
+        </table>
       </div>
     </div>
   </div>
 
-  <!-- CENTER MAP -->
+  <!-- 地图中心 -->
   <div id="map-center">
     <canvas id="globe-canvas"></canvas>
-    <div id="map-stats">
-      <div class="mstat"><div><div class="mstat-val" id="ms-cities">12</div><div class="mstat-lbl">覆盖城市</div></div></div>
-      <div class="mstat"><div><div class="mstat-val" id="ms-brands" style="color:var(--red)">0</div><div class="mstat-lbl">直播品牌</div></div></div>
-    </div>
-    <div id="time-range">
-      <div class="tr-btn active" onclick="setTR('1d',this)">1D</div>
-      <div class="tr-btn" onclick="setTR('7d',this)">7D</div>
-      <div class="tr-btn" onclick="setTR('30d',this)">30D</div>
-    </div>
-    <div id="layer-strip">
-      <div class="layer-btn on" data-layer="jobs" onclick="toggleLayer(this)"><div class="lb-dot" style="background:#3b82f6"></div>就业热度</div>
-      <div class="layer-btn on" data-layer="live" onclick="toggleLayer(this)"><div class="lb-dot" style="background:#f43f5e"></div>品牌直播</div>
-      <div class="layer-btn on" data-layer="hubs" onclick="toggleLayer(this)"><div class="lb-dot" style="background:#10b981"></div>教育机构</div>
-      <div class="layer-btn" data-layer="keywords" onclick="toggleLayer(this)"><div class="lb-dot" style="background:#f59e0b"></div>关键词热区</div>
-      <div class="layer-btn" data-layer="flow" onclick="toggleLayer(this)"><div class="lb-dot" style="background:#8b5cf6"></div>数据流</div>
-    </div>
   </div>
 
-  <!-- RIGHT COLUMN -->
+  <!-- 右侧列 -->
   <div class="col col-r" style="overflow-y:auto">
-    <!-- AI INSIGHT -->
     <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">🧠</div>
-        <div class="ph-title">AI洞察</div>
-        <div class="ph-badge b-ai">GPT-4o</div>
-      </div>
+      <div class="panel-hdr"><div class="ph-icon">🧠</div><div class="ph-title">AI洞察</div><div class="ph-badge b-ai">GPT-4o</div></div>
       <div class="panel-body" style="max-height:310px">
-        <div class="is-title">📈 趋势预测</div>
-        <div class="trend-row"><div class="tr-lbl"><span class="tr-name">K12在线教育需求</span><span class="tr-val" style="color:var(--green)">+12%</span></div><div class="tr-track"><div class="tr-fill tf-pos" style="width:72%"></div></div></div>
-        <div class="trend-row"><div class="tr-lbl"><span class="tr-name">AI教研岗位热度</span><span class="tr-val" style="color:var(--green)">+28%</span></div><div class="tr-track"><div class="tr-fill tf-pos" style="width:85%"></div></div></div>
-        <div class="trend-row"><div class="tr-lbl"><span class="tr-name">纯直播竞争压力</span><span class="tr-val" style="color:var(--red)">↑高</span></div><div class="tr-track"><div class="tr-fill tf-neg" style="width:60%"></div></div></div>
-
-        <div class="is-title">💰 投资信号</div>
-        <div class="inv-row ir-bull"><div class="ir-dot" style="background:var(--green)"></div><span><b style="color:var(--green)">看多</b> 教育SaaS工具（AI+教研）</span></div>
-        <div class="inv-row ir-neut"><div class="ir-dot" style="background:var(--amber)"></div><span><b style="color:var(--amber)">谨慎</b> 纯直播课模式</span></div>
-        <div class="inv-row ir-bull"><div class="ir-dot" style="background:var(--green)"></div><span><b style="color:var(--cyan)">关注</b> 编程启蒙细分赛道</span></div>
-
-        <div class="is-title">✅ 结构化结论</div>
-        <div class="insight-item"><div class="ii-num">01</div><div class="ii-txt">BOSS直聘教育岗位今日+23%，AI教研师需求突出</div></div>
-        <div class="insight-item"><div class="ii-num">02</div><div class="ii-txt">猿辅导直播观看7日均值↑18%，内容信号正面</div></div>
-        <div class="insight-item"><div class="ii-num">03</div><div class="ii-txt">GitHub AI教育仓库本周新增趋势项目12个</div></div>
-
-        <div class="is-title">⚠️ 风险提示</div>
-        <div class="risk-row"><span class="rb">•</span><span>教育监管政策动态不确定性持续较高</span></div>
-        <div class="risk-row"><span class="rb">•</span><span>头部品牌直播竞争加剧，中小机构承压</span></div>
-        <div class="is-ts" id="insight-ts">生成于 --:-- · GPT-4o · 置信度 87%</div>
-      </div>
-    </div>
-
-    <!-- HOTSPOT -->
-    <div class="panel" style="flex:0 0 auto">
-      <div class="panel-hdr">
-        <div class="ph-icon">🔴</div>
-        <div class="ph-title">行业热点</div>
-        <div class="ph-badge b-ok">实时聚合</div>
-      </div>
-      <div class="panel-body" style="max-height:260px">
-        <div class="tabs">
-          <div class="tab active" onclick="hsTab('hot',this)">热度</div>
-          <div class="tab" onclick="hsTab('policy',this)">政策</div>
-          <div class="tab" onclick="hsTab('fund',this)">融资</div>
-          <div class="tab" onclick="hsTab('social',this)">舆情</div>
-        </div>
-        <div id="hs-list" style="max-height:160px;overflow-y:auto"></div>
-        <div class="sent-bar">
-          <div class="sb-l">24h 情感分析</div>
-          <div class="sb-track">
-            <div class="sbp" id="sbp" style="width:62%"></div>
-            <div class="sbn" id="sbn" style="width:18%"></div>
-            <div class="sbu" style="flex:1"></div>
-          </div>
-          <div class="sb-pct">
-            <span style="color:var(--green)">正面 <b id="pp">62%</b></span>
-            <span style="color:var(--red)">负面 <b id="pn">18%</b></span>
-            <span style="color:var(--text-2)">中性 <b>20%</b></span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- VIDEO -->
-    <div class="panel" style="flex:1 1 0;min-height:0">
-      <div class="panel-hdr">
-        <div class="ph-icon">📱</div>
-        <div class="ph-title">视频流</div>
-        <div class="ph-badge b-live">多平台</div>
-      </div>
-      <div class="panel-body" style="overflow:hidden">
-        <div class="tabs" id="vid-tabs">
-          <div class="tab active" onclick="vidTab('dy',this)">抖音</div>
-          <div class="tab" onclick="vidTab('bl',this)">B站</div>
-          <div class="tab" onclick="vidTab('xhs',this)">小红书</div>
-          <div class="tab" onclick="vidTab('wb',this)">微博</div>
-        </div>
-        <div class="vid-grid" id="vid-grid"></div>
+        <div style="color:var(--text-1);padding:20px;text-align:center;">AI洞察模块加载中...</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- BOTTOM STRIP -->
-<div id="bot-strip">
-  <div class="bs-panel">
-    <div class="bs-hdr"><span>🔥</span>GitHub Trending<div class="ph-badge b-ai" style="margin-left:auto">AI摘要</div></div>
-    <div class="bs-body">
-      <div style="display:flex;gap:4px;margin-bottom:7px" id="gh-tabs2">
-        <div class="tab active" onclick="ghTab('trending',this)" style="font-size:10px;padding:3px">今日</div>
-        <div class="tab" onclick="ghTab('market',this)" style="font-size:10px;padding:3px">市场</div>
-      </div>
-      <div id="gh-view"></div>
-    </div>
-  </div>
-  <div class="bs-panel" style="border-right:none;border-left:1px solid var(--border);border-right:1px solid var(--border)">
-    <div class="bs-hdr"><span>🃏</span>AI摘要卡片流
-      <div style="margin-left:auto;display:flex;gap:4px" id="card-tag-strip">
-        <span class="jf active" data-t="教育" onclick="toggleTag('教育',this)" style="font-size:9px;padding:1px 5px">教育</span>
-        <span class="jf active" data-t="AI" onclick="toggleTag('AI',this)" style="font-size:9px;padding:1px 5px">AI</span>
-        <span class="jf" data-t="投放" onclick="toggleTag('投放',this)" style="font-size:9px;padding:1px 5px">投放</span>
-        <span class="jf active" data-t="直播" onclick="toggleTag('直播',this)" style="font-size:9px;padding:1px 5px">直播</span>
-      </div>
-    </div>
-    <div class="bs-body" style="padding-top:6px">
-      <div class="ai-card-stream" id="ai-stream"></div>
-    </div>
-  </div>
-  <div class="bs-panel" style="border-right:none">
-    <div class="bs-hdr"><span>📊</span>趋势图表<div class="ph-badge b-ok" style="margin-left:auto">7日</div></div>
-    <div class="bs-body" style="padding-top:6px">
-      <div class="chart-legend" id="chart-leg">
-        <div class="cl-item"><div class="cl-line" style="background:var(--blue)"></div>岗位数</div>
-        <div class="cl-item"><div class="cl-line" style="background:var(--red)"></div>直播观看</div>
-        <div class="cl-item"><div class="cl-line" style="background:var(--amber)"></div>GitHub Stars</div>
-      </div>
-      <div class="chart-area">
-        <svg id="trend-chart" width="100%" height="110" viewBox="0 0 240 110" preserveAspectRatio="none"></svg>
-      </div>
-    </div>
-  </div>
+<div id="bot-strip" class="collapsed">
+  <div class="bs-panel"><div class="bs-hdr"><span>🔥</span>GitHub Trending</div><div class="bs-body" id="gh-view">加载中...</div></div>
 </div>
 
-<div id="bot-toggle" onclick="toggleBot()">▼ 面板</div>
+<div id="bot-toggle" onclick="toggleBot()">▲ 面板</div>
 
-<!-- STATUS BAR -->
 <div id="statusbar">
-  <div class="sb-item"><span class="sg">●</span> API <span class="sg">ONLINE</span></div>
-  <div class="sb-item"><span class="sb">●</span> Supabase <span class="sb">CONNECTED</span></div>
-  <div class="sb-item"><span class="sa">⚡</span><span id="latency" class="sa">38ms</span></div>
-  <div id="ticker-wrap">
-    <div id="ticker-inner">
-      🔴 Edu Monitor v2 已连接 Supabase&nbsp;&nbsp;|&nbsp;&nbsp;
-      📊 数据正在实时加载中...
-    </div>
-  </div>
+  <div class="sb-item"><span class="sg">●</span> Supabase <span class="sg">CONNECTED</span></div>
+  <div id="ticker-wrap"><div id="ticker-inner">Edu Monitor v2 已连接 Supabase</div></div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════
-   STATE MANAGEMENT
-   ═══════════════════════════════════════════════════ */
+/* STATE */
 const State = {
   jobs: [], jobFilter: 'all',
   live: [], liveTotal: 0,
@@ -649,358 +269,116 @@ const State = {
   layers: { jobs:true, live:true, hubs:true, keywords:false, flow:false },
   timeRange: '1d',
   alerts: [],
-  metrics: { jobsToday:0, liveCount:0, ghNew:0, alertCount:0 },
-  radarHL: null,
   botOpen: true,
 };
 
-/* ═══════════════════════════════════════════════════
-   API LAYER — Supabase
-   ═══════════════════════════════════════════════════ */
+/* API */
 const API = {
   base: 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1',
 
   async get(path) {
     try {
-      const response = await fetch(this.base + path, {
-        method: 'GET',
+      const res = await fetch(this.base + path, {
         headers: {
           'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',
           'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'
         }
       });
-
-      if (!response.ok) {
-        console.error(`Supabase ${path} 返回错误:`, response.status);
+      if (!res.ok) {
+        console.error(`401/403 ${path} - 请确认 RLS 已关闭`);
         return [];
       }
-
-      const data = await response.json();
-      console.log(`✅ 成功获取 ${path} 数据 → ${data.length} 条`, data);
+      const data = await res.json();
+      console.log(`✅ ${path} 获取成功 (${data.length} 条)`);
       return data;
-    } catch (error) {
-      console.error(`❌ 请求 ${path} 失败:`, error);
+    } catch (e) {
+      console.error(`请求失败 ${path}`, e);
       return [];
     }
   },
 
-  getJobs:    () => API.get('/jobs'),
-  getLive:    () => API.get('/live'),
-  getGithub:  () => API.get('/github'),
-  getKeywords:() => API.get('/keywords'),
+  getJobs: () => API.get('/jobs'),
+  getLive: () => API.get('/live'),
+  getGithub: () => API.get('/github'),
+  getKeywords: () => API.get('/keywords'),
   getHotspot: () => API.get('/hotspot'),
-  getVideos:  () => API.get('/video'),
-  getAlerts:  () => API.get('/alerts'),
+  getVideos: () => API.get('/video'),
+  getAlerts: () => API.get('/alerts'),
 };
 
-/* ═══════════════════════════════════════════════════
-   MODULES
-   ═══════════════════════════════════════════════════ */
+/* MODULES */
 const Modules = [
-  { id:'jobs',     api:API.getJobs,     interval:300000, render:renderJobs },
-  { id:'live',     api:API.getLive,     interval:60000,  render:renderLive },
-  { id:'github',   api:API.getGithub,   interval:600000, render:renderGithub },
-  { id:'keywords', api:API.getKeywords, interval:300000, render:renderKeywords },
-  { id:'hotspot',  api:API.getHotspot,  interval:180000, render:renderHotspot },
-  { id:'videos',   api:API.getVideos,   interval:120000, render:renderVideos },
-  { id:'alerts',   api:API.getAlerts,   interval:60000,  render:processAlerts },
+  { id:'jobs', api:API.getJobs, render:renderJobs },
+  { id:'live', api:API.getLive, render:renderLive },
+  { id:'github', api:API.getGithub, render:renderGithub },
+  { id:'keywords', api:API.getKeywords, render:renderKeywords },
 ];
 
-/* ═══════════════════════════════════════════════════
-   MOCK（后备）
-   ═══════════════════════════════════════════════════ */
-const MOCK = {
-  '/jobs': [],
-  '/live': [],
-  '/github': [],
-  '/keywords': [],
-  '/hotspot': { hot: [], policy: [], fund: [], social: [] },
-  '/video': { dy: [], bl: [], xhs: [], wb: [] },
-  '/alerts': [],
-};
-
-/* ═══════════════════════════════════════════════════
-   RENDER FUNCTIONS（已优化容错）
-   ═══════════════════════════════════════════════════ */
-const PLT_CLASS = { boss:'plt-boss', zhilian:'plt-zl', '51job':'plt-51', lagou:'plt-lg' };
-const PLT_LABEL = { boss:'BOSS', zhilian:'智联', '51job':'前程', lagou:'拉勾' };
-
+/* RENDER */
 function renderJobs(data) {
   State.jobs = Array.isArray(data) ? data : [];
-  const f = State.jobFilter;
-  const list = f === 'all' ? State.jobs : State.jobs.filter(j => j.platform === f);
-  document.getElementById('job-list').innerHTML = list.slice(0,6).map(j => `
+  const html = State.jobs.slice(0,6).map(j => `
     <div class="ji">
-      <div class="ji-r1">
-        <div class="ji-title">${j.title || '未知岗位'}</div>
-        <div class="ji-plt ${PLT_CLASS[j.platform] || ''}">${PLT_LABEL[j.platform] || ''}</div>
-      </div>
-      <div class="ji-r2">
-        <span>${j.company || ''}</span>
-        <span>📍${j.city || ''}</span>
-        <span class="ji-sal">${j.salary || ''}</span>
-      </div>
+      <div class="ji-r1"><div class="ji-title">${j.title || '未知岗位'}</div></div>
+      <div class="ji-r2"><span>${j.company || ''}</span><span>📍${j.city || ''}</span><span class="ji-sal">${j.salary || ''}</span></div>
     </div>
   `).join('');
-  renderJobsChart();
-}
-
-function filterJ(f, el) {
-  State.jobFilter = f;
-  document.querySelectorAll('#jfilters .jf').forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
-  renderJobs(State.jobs);
+  document.getElementById('job-list').innerHTML = html || '暂无岗位数据';
 }
 
 function renderLive(data) {
   State.live = Array.isArray(data) ? data : [];
   let total = 0;
-  const PC = { dy:'pdy', bl:'pbl', wx:'pwx' };
-  const PN = { dy:'抖音', bl:'B站', wx:'视频号' };
-
-  document.getElementById('live-rows').innerHTML = State.live.map(b => {
+  const html = State.live.map(b => {
     if (b.live) total += Number(b.viewers || 0);
-    const vs = Number(b.viewers || 0) >= 10000 ? (Number(b.viewers)/10000).toFixed(1)+'万' : (b.viewers || 0);
-    return `
-    <div class="live-row">
-      <div class="ld ${b.live ? 'on' : 'off'}"></div>
-      <div class="live-brand">${b.brand || '未知品牌'}</div>
-      ${b.live 
-        ? `<div class="live-v">👁 <b>${vs}</b></div><span style="color:var(--green)">+${b.trend || 0}%</span>` 
-        : `<div style="color:var(--text-2)">${b.next || '即将开播'}</div>`}
-      <div class="live-plt ${PC[b.platform] || ''}">${PN[b.platform] || b.platform || ''}</div>
-    </div>`;
+    return `<div class="live-row"><div class="ld ${b.live?'on':'off'}"></div><div class="live-brand">${b.brand||'未知'}</div><div class="live-v">👁 <b>${b.viewers||0}</b></div></div>`;
   }).join('');
-
-  const liveCount = State.live.filter(b => b.live).length;
-  document.getElementById('hd-live').textContent = liveCount;
-  document.getElementById('lp-badge').textContent = `● LIVE ${liveCount}`;
-  document.getElementById('lt-val').textContent = (total/10000).toFixed(1)+'万';
+  document.getElementById('live-rows').innerHTML = html || '暂无直播数据';
+  document.getElementById('hd-live').textContent = State.live.filter(b=>b.live).length;
 }
 
 function renderGithub(data) {
-  console.log("renderGithub 被调用，数据：", data);
   State.github = Array.isArray(data) ? data : [];
-  const view = document.getElementById('gh-view');
-  if (State.github.length === 0) {
-    view.innerHTML = '<div style="padding:15px;color:var(--text-2);text-align:center">暂无 GitHub 数据</div>';
-    return;
-  }
-  view.innerHTML = State.github.slice(0,4).map(r => `
-    <div class="gh-row">
-      <div style="flex:1">
-        <div style="font-size:11px;color:var(--blue)">${r.repo || r.name || '未知仓库'}</div>
-        <div style="font-size:9.5px;color:var(--amber)">⭐ ${r.stars || r.star_count || 0}</div>
-      </div>
-    </div>
-  `).join('');
+  document.getElementById('gh-view').innerHTML = State.github.length ? 
+    State.github.map(r => `<div class="gh-row"><div style="font-size:11px;color:var(--blue)">${r.repo||'未知仓库'}</div></div>`).join('') : 
+    '暂无 GitHub 数据';
 }
 
 function renderKeywords(data) {
   State.keywords = Array.isArray(data) ? data : [];
-  document.getElementById('kw-tbody').innerHTML = State.keywords.map(k => `
-    <tr>
-      <td style="color:var(--text-0)">${k.kw || k.keyword || '未知关键词'}</td>
-      <td><span class="kw-bar" style="width:${(k.heat||0)*0.55}px;background:linear-gradient(90deg,var(--blue),var(--cyan))"></span> ${k.heat||0}</td>
-      <td class="kw-price">¥${k.price||0}</td>
-      <td class="${(k.up||0)>0?'ku':(k.up||0)<0?'kd':'kf'}">${(k.up||0)>0?'+':''}${k.chg||0}%</td>
-    </tr>
+  const html = State.keywords.map(k => `
+    <tr><td>${k.kw||k.keyword||'未知'}</td><td>${k.heat||0}</td><td>¥${k.price||0}</td><td>${k.chg||0}%</td></tr>
   `).join('');
+  document.getElementById('kw-tbody').innerHTML = html || '<tr><td colspan="4">暂无关键词数据</td></tr>';
 }
 
-function renderHotspot(data) {
-  console.log("Hotspot 数据:", data);
-  State.hotspot = data || { hot: [], policy: [], fund: [], social: [] };
-  updateHsList();
-}
-
-function updateHsList() {
-  const data = State.hotspot[State.hsTab] || [];
-  document.getElementById('hs-list').innerHTML = data.map(h => `
-    <div class="hs-item">
-      <div class="hs-rank ${h.rank<=3?'top':''}">${h.rank<=3?['🥇','🥈','🥉'][h.rank-1]:h.rank}</div>
-      <div class="hs-body">
-        <div class="hs-title">${h.title || '暂无热点'}</div>
-        <div class="hs-meta"><span class="hs-src">${h.src || ''}</span></div>
-      </div>
-      <div class="hs-score">${h.score || ''}</div>
-    </div>
-  `).join('');
-}
-
-function hsTab(t, el) {
-  State.hsTab = t;
-  document.querySelectorAll('.col-r .panel:nth-child(2) .tab').forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
-  updateHsList();
-}
-
-function renderVideos(data) {
-  console.log("Videos 数据:", data);
-  State.videos = data || { dy: [], bl: [], xhs: [], wb: [] };
-  updateVidGrid();
-}
-
-function updateVidGrid() {
-  const data = State.videos[State.vidTab] || [];
-  const PC = { dy:'vdy', bl:'vbl', xhs:'vxhs', wb:'vwb' };
-  const PN = { dy:'抖音', bl:'B站', xhs:'小红书', wb:'微博' };
-  document.getElementById('vid-grid').innerHTML = data.slice(0,4).map(v => `
-    <div class="vid-card">
-      <div class="vid-thumb" style="background:var(--bg-3)">
-        <span style="z-index:1;font-size:20px">${v.emoji || '📹'}</span>
-        <div class="vid-plt ${PC[v.platform] || ''}">${PN[v.platform] || v.platform || ''}</div>
-      </div>
-      <div class="vid-info">
-        <div class="vid-title">${v.title || '暂无视频'}</div>
-        <div class="vid-meta"><span>👁 ${v.views || '0'}</span><span>❤️ ${v.likes || '0'}</span></div>
-      </div>
-    </div>
-  `).join('');
-}
-
-function vidTab(t, el) {
-  State.vidTab = t;
-  document.querySelectorAll('#vid-tabs .tab').forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
-  updateVidGrid();
-}
-
-function renderAiCards() {
-  const CARDS = [
-    { urgency:'brk', src:'直播·猿辅导', title:'直播间观看突破2万', body:'猿辅导今日直播冲高，较昨日↑23%', tags:['直播','教育'] },
-    { urgency:'hi',  src:'政策·教育部', title:'AI课程纳入中小学必修', body:'2025年起小学4年级开设AI基础课程', tags:['教育','政策'] },
-  ];
-  const filtered = CARDS.filter(c => c.tags.some(t => State.activeTags.has(t)));
-  const UC = { brk:'aic-brk', hi:'aic-hi', md:'aic-md', lo:'aic-lo' };
-  document.getElementById('ai-stream').innerHTML = filtered.map(c => `
-    <div class="aic ${UC[c.urgency]}">
-      <div class="aic-src">${c.src.toUpperCase()}</div>
-      <div class="aic-title">${c.title}</div>
-      <div class="aic-body">${c.body}</div>
-      <div class="aic-tags">${c.tags.map(t=>`<span class="aic-tag">#${t}</span>`).join('')}</div>
-    </div>
-  `).join('');
-}
-
-function toggleTag(t, el) {
-  if(State.activeTags.has(t)){State.activeTags.delete(t);el.classList.remove('active')}
-  else{State.activeTags.add(t);el.classList.add('active')}
-  renderAiCards();
-}
-
-function processAlerts(data) {
-  console.log("Alerts 数据:", data);
-}
-
-function dismissAlert() {
-  document.getElementById('alert-banner').classList.remove('show');
-}
-
-/* RADAR CHART */
-const RADAR_DATA = [
-  { brand:'学而思', color:'#3b82f6', v:[0.88,0.92,0.85,0.78,0.45,0.91] },
-  { brand:'猿辅导', color:'#10b981', v:[0.81,0.88,0.79,0.95,0.38,0.85] },
-];
-const RDIMS = ['品牌声量','内容热度','招聘扩张','直播活跃','GitHub','关键词'];
-
-function renderRadar() {
-  // 简化版，防止报错
-  console.log("雷达图渲染");
-}
-
-/* TREND CHART */
-function renderTrendChart() {
-  const svg = document.getElementById('trend-chart');
-  svg.innerHTML = `<text x="120" y="60" text-anchor="middle" fill="#3d5070" font-size="12">趋势图表加载中...</text>`;
-}
-
-function renderJobsChart() {
-  const svg = document.getElementById('jobs-chart');
-  svg.innerHTML = `<polyline points="0,30 80,20 160,25 240,10" fill="none" stroke="#3b82f6" stroke-width="2"/>`;
-}
-
-/* CANVAS MAP */
-const CITIES = [{ name:'北京', lat:39.9, lon:116.4, jobs:1240 }];
-const BRANDS = [{ name:'学而思', lat:39.9, lon:116.4, live:true }];
-const CHINA_OUTLINE = [[73.7,39.4],[135.5,47.0],[73.7,39.4]];
-
-let canvasFrame = 0;
-
-function initParticles() {}
-function drawMap() {
-  const canvas = document.getElementById('globe-canvas');
-  const ctx = canvas.getContext('2d');
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle = 'rgba(59,130,246,0.1)';
-  ctx.fillRect(0,0,canvas.width,canvas.height);
-  canvasFrame++;
-  requestAnimationFrame(drawMap);
-}
-
-/* OTHER FUNCTIONS */
-function toggleLayer(el) {
-  const l = el.dataset.layer;
-  State.layers[l] = !State.layers[l];
-  el.classList.toggle('on', State.layers[l]);
-}
-
-function setTR(t, el) {
-  State.timeRange = t;
-  document.querySelectorAll('#time-range .tr-btn').forEach(e => e.classList.remove('active'));
-  el.classList.add('active');
-}
-
-function toggleBot() {
-  State.botOpen = !State.botOpen;
-  document.getElementById('bot-strip').classList.toggle('collapsed', !State.botOpen);
-  document.getElementById('bot-toggle').textContent = State.botOpen ? '▼ 面板' : '▲ 面板';
-}
-
-function notify(msg, type='info') {
-  const c = document.getElementById('notif');
-  const el = document.createElement('div');
-  el.className = `ntf ntf-${type}`;
-  el.textContent = msg;
-  c.appendChild(el);
-  setTimeout(() => el.remove(), 4200);
-}
-
-function updateClock() {
-  const n = new Date();
-  document.getElementById('tb-clock').textContent = n.toLocaleTimeString('zh-CN',{hour12:false}) + ' CST';
-}
+function renderHotspot() { console.log("Hotspot 暂未实现"); }
+function renderVideos() { console.log("Videos 暂未实现"); }
+function processAlerts() { console.log("Alerts 暂未实现"); }
 
 /* BOOTSTRAP */
 async function bootstrap() {
   const lt = document.getElementById('loader-txt');
-  const steps = ['连接 Supabase...', '加载数据...', '渲染面板...', '启动完成'];
-  for (let step of steps) {
-    lt.textContent = step;
-    await new Promise(r => setTimeout(r, 400));
+  const steps = ['连接 Supabase...', '加载岗位数据...', '加载直播数据...', '加载关键词...', '系统就绪'];
+  for (let s of steps) {
+    lt.textContent = s;
+    await new Promise(r => setTimeout(r, 350));
   }
 
-  await Promise.all(Modules.map(async m => {
+  for (let m of Modules) {
     try {
       const data = await m.api();
-      if (typeof m.render === 'function') m.render(data);
+      m.render(data);
     } catch(e) {
-      console.warn(`模块 ${m.id} 加载失败`, e);
+      console.warn(m.id + ' 加载失败', e);
     }
-  }));
-
-  renderAiCards();
-  renderTrendChart();
-  renderJobsChart();
-  initParticles();
-  drawMap();
-  updateClock();
+  }
 
   const loader = document.getElementById('loader');
   loader.style.opacity = '0';
-  setTimeout(() => loader.style.display = 'none', 600);
+  setTimeout(() => loader.style.display = 'none', 500);
 
-  console.log('🎉 Edu Monitor v2 已成功启动（Supabase 模式）');
+  console.log('🎉 Edu Monitor v2 启动完成！请查看 Console 日志');
 }
 
 document.addEventListener('DOMContentLoaded', bootstrap);
