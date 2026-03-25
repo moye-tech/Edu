@@ -905,10 +905,9 @@ const State = {
 };
 
 /* ═══════════════════════════════════════════════════
-   API LAYER  (production: replace mock with real fetch)
+   API LAYER
    ═══════════════════════════════════════════════════ */
 const API = {
-  // 你的 Supabase 项目地址
   base: 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1',
 
   async get(path) {
@@ -916,24 +915,25 @@ const API = {
       const response = await fetch(this.base + path, {
         method: 'GET',
         headers: {
-          'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',        // ← 你的 Publishable Key
+          'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',
           'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'
         }
       });
 
       if (!response.ok) {
-        console.warn('Supabase 返回错误:', response.status);
+        console.error('Supabase 返回错误:', response.status, await response.text());
         return MOCK[path] || {};
       }
 
-      return await response.json();
+      const data = await response.json();
+      console.log(`✅ 成功获取 ${path} 数据 →`, data.length || data);  // 方便你调试
+      return data;
     } catch (error) {
-      console.error('请求 Supabase 失败:', error);
-      return MOCK[path] || {};   // 出问题时 fallback 到假数据
+      console.error('❌ 请求 Supabase 失败:', error);
+      return MOCK[path] || {};
     }
   },
 
-  // 下面路径与你的表名保持一致
   getJobs:    () => API.get('/jobs'),
   getLive:    () => API.get('/live'),
   getGithub:  () => API.get('/github'),
@@ -943,15 +943,6 @@ const API = {
   getAlerts:  () => API.get('/alerts'),
 };
 
-  // 下面这几行保持不变
-  getJobs:    () => API.get('/jobs'),      // 注意这里改成了 /jobs （表名）
-  getLive:    () => API.get('/live'),
-  getGithub:  () => API.get('/github'),
-  getKeywords:() => API.get('/keywords'),
-  getHotspot: () => API.get('/hotspot'),
-  getVideos:  () => API.get('/video'),
-  getAlerts:  () => API.get('/alerts'),
-};
 
 /* ═══════════════════════════════════════════════════
    MODULE CONFIG  (config-driven architecture)
