@@ -3,74 +3,428 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Edu Monitor v2 - 测试版</title>
+<title>Edu Monitor v2 · 教育行业实时情报台</title>
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  body{margin:0;font-family:'Noto Sans SC',sans-serif;background:#040810;color:#eef4ff;height:100vh;display:flex;align-items:center;justify-content:center}
-  .container{max-width:1100px;width:100%;padding:20px}
-  .panel{background:#0c1426;border:1px solid #3b82f6;border-radius:12px;padding:20px;margin:15px 0}
-  h2{margin:0 0 15px 0;color:#3b82f6;font-size:18px}
-  .data{line-height:1.8;font-size:15px}
-  .empty{color:#8ca0be}
+:root {
+  --bg-0:#040810; --bg-1:#070d1a; --bg-2:#0c1426; --bg-3:#101c34;
+  --panel:#08111f; --panel-b:rgba(8,17,31,0.92);
+  --blue:#3b82f6; --blue-d:#1d4ed8; --blue-g:rgba(59,130,246,0.07);
+  --cyan:#06b6d4; --green:#10b981; --red:#f43f5e;
+  --amber:#f59e0b; --purple:#8b5cf6; --orange:#fb923c;
+  --border:rgba(59,130,246,0.13); --border-h:rgba(59,130,246,0.35);
+  --text-0:#eef4ff; --text-1:#8ca0be; --text-2:#3d5070;
+  --font-h:'Rajdhani',sans-serif; --font-m:'JetBrains Mono',monospace;
+  --font-cn:'Noto Sans SC',sans-serif;
+  --panel-w:270px; --top-h:46px; --bot-h:26px; --r:5px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-size:12px;font-family:var(--font-cn)}
+body{background:var(--bg-0);color:var(--text-0);background-image:radial-gradient(ellipse 60% 40% at 50% 0%,rgba(59,130,246,0.05) 0%,transparent 60%);}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:3px;height:3px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:rgba(59,130,246,0.3);border-radius:2px}
+
+/* TOP BAR */
+#topbar{position:fixed;top:0;left:0;right:0;z-index:200;height:var(--top-h);background:rgba(4,8,16,0.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 14px;gap:14px;backdrop-filter:blur(16px);}
+.tb-logo{display:flex;align-items:center;gap:8px;font-family:var(--font-h);font-size:19px;font-weight:700;letter-spacing:2.5px;color:var(--blue);text-transform:uppercase;white-space:nowrap;}
+.tb-logo em{color:var(--text-0);font-style:normal}
+.pulse-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green);animation:pdot 2s infinite;}
+@keyframes pdot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:.5}}
+.tb-sep{width:1px;height:20px;background:var(--border)}
+.tb-stat{display:flex;align-items:center;gap:5px;font-family:var(--font-m);font-size:10.5px;color:var(--text-1);white-space:nowrap;}
+.tv{color:var(--text-0);font-weight:500}
+.tv-r{color:var(--red)}
+.tv-g{color:var(--green)}
+.tv-a{color:var(--amber)}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.chip{padding:2px 8px;border-radius:3px;font-family:var(--font-m);font-size:9.5px;font-weight:600;letter-spacing:1px;border:1px solid;cursor:default;}
+.chip-live{border-color:rgba(244,63,94,.4);color:var(--red);background:rgba(244,63,94,.08);animation:chipblink 2s infinite}
+@keyframes chipblink{0%,100%{opacity:1}50%{opacity:.6}}
+.chip-edu{border-color:rgba(59,130,246,.3);color:var(--blue);background:rgba(59,130,246,.07)}
+#tb-clock{font-family:var(--font-m);font-size:11px;color:var(--text-1);letter-spacing:.5px}
+
+/* ALERT BANNER */
+#alert-banner{position:fixed;top:var(--top-h);left:0;right:0;z-index:190;background:rgba(244,63,94,0.1);border-bottom:1px solid rgba(244,63,94,.25);padding:5px 20px;display:none;align-items:center;gap:10px;font-size:11px;font-family:var(--font-m);color:var(--red);backdrop-filter:blur(8px);}
+#alert-banner.show{display:flex;animation:slideDown .3s ease}
+@keyframes slideDown{from{transform:translateY(-100%);opacity:0}to{transform:none;opacity:1}}
+
+/* MAIN LAYOUT */
+#app{position:fixed;top:var(--top-h);left:0;right:0;bottom:var(--bot-h);display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);gap:0;overflow:hidden;}
+.col{display:flex;flex-direction:column;gap:0;overflow:hidden;background:var(--bg-1);}
+.col-l{border-right:1px solid var(--border)}
+.col-r{border-left:1px solid var(--border)}
+.panel{display:flex;flex-direction:column;border-bottom:1px solid var(--border);flex-shrink:0;transition:border-color .2s;animation:fadeIn .4s ease both;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.panel-hdr{display:flex;align-items:center;gap:7px;padding:8px 11px 7px;border-bottom:1px solid var(--border);background:rgba(8,17,31,0.6);flex-shrink:0;cursor:default;}
+.ph-icon{font-size:13px;line-height:1}
+.ph-title{font-family:var(--font-h);font-size:12.5px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-0);}
+.ph-badge{margin-left:auto;padding:1px 6px;border-radius:3px;font-family:var(--font-m);font-size:9px;font-weight:600;letter-spacing:.5px;border:1px solid;}
+.b-live{border-color:rgba(244,63,94,.4);color:var(--red);background:rgba(244,63,94,.08)}
+.b-ai{border-color:rgba(139,92,246,.35);color:var(--purple);background:rgba(139,92,246,.07)}
+.b-ok{border-color:rgba(16,185,129,.35);color:var(--green);background:rgba(16,185,129,.07)}
+.panel-body{padding:9px 10px;overflow-y:auto;flex:1}
+
+.tabs{display:flex;gap:2px;background:var(--bg-0);border-radius:4px;padding:2px;margin-bottom:8px}
+.tab{flex:1;padding:4px;text-align:center;font-size:10.5px;color:var(--text-2);cursor:pointer;border-radius:3px;transition:all .15s;font-family:var(--font-cn);}
+.tab.active{background:var(--bg-3);color:var(--text-0)}
+
+/* OVERVIEW */
+#overview{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-bottom:1px solid var(--border);flex-shrink:0;}
+.ov-cell{background:var(--bg-1);padding:8px 10px;display:flex;flex-direction:column;gap:2px;cursor:default;transition:background .15s;}
+.ov-cell:hover{background:var(--bg-2)}
+.ov-val{font-family:var(--font-m);font-size:18px;font-weight:600;line-height:1;color:var(--text-0);}
+.ov-lbl{font-size:9.5px;color:var(--text-2);margin-top:1px}
+.ov-delta{font-family:var(--font-m);font-size:9px;margin-top:2px}
+.d-up{color:var(--green)} .d-dn{color:var(--red)}
+
+/* JOBS */
+.job-filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:7px}
+.jf{padding:2px 8px;border-radius:3px;font-size:10px;cursor:pointer;border:1px solid var(--border);color:var(--text-1);transition:all .13s;}
+.jf.active{background:var(--blue-g);border-color:var(--blue);color:var(--blue)}
+.job-list{display:flex;flex-direction:column;gap:4px;max-height:220px;overflow-y:auto}
+.ji{background:var(--bg-2);border:1px solid var(--border);border-radius:4px;padding:6px 8px;transition:border-color .13s;}
+.ji:hover{border-color:var(--border-h)}
+.ji-r1{display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.ji-title{font-size:11px;font-weight:500;flex:1;color:var(--text-0)}
+.ji-plt{font-family:var(--font-m);font-size:8.5px;padding:1px 4px;border-radius:2px;font-weight:600;letter-spacing:.5px;}
+.plt-boss{background:rgba(244,63,94,.12);color:var(--red)}
+.plt-zl{background:rgba(59,130,246,.1);color:var(--blue)}
+.plt-51{background:rgba(245,158,11,.1);color:var(--amber)}
+.plt-lg{background:rgba(16,185,129,.1);color:var(--green)}
+.ji-r2{display:flex;gap:7px;font-family:var(--font-m);font-size:9.5px;color:var(--text-2)}
+.ji-sal{color:var(--amber)}
+.ji-tag{font-size:9px;padding:0 4px;border-radius:2px;background:rgba(59,130,246,.08);color:var(--blue);}
+
+/* LIVE */
+.live-row{display:flex;align-items:center;gap:7px;padding:5px 6px;border-radius:4px;margin-bottom:3px;background:var(--bg-2);border:1px solid var(--border);transition:border-color .13s;}
+.live-row:hover{border-color:var(--border-h)}
+.ld{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ld.on{background:var(--red);box-shadow:0 0 6px var(--red);animation:ldp 1.4s infinite}
+.ld.off{background:var(--text-2)}
+@keyframes ldp{0%,100%{transform:scale(1)}50%{transform:scale(1.5);opacity:.6}}
+.live-brand{font-size:11px;font-weight:500;flex:1}
+.live-v{font-family:var(--font-m);font-size:10px;color:var(--text-1)}
+.live-v b{color:var(--text-0)}
+.live-plt{font-family:var(--font-m);font-size:8px;font-weight:700;padding:1px 4px;border-radius:2px;}
+.pdy{background:#010101;color:#fe2c55}
+.pbl{background:rgba(0,161,214,.15);color:#00a1d6}
+.live-total{margin-top:8px;padding:6px 8px;background:var(--bg-0);border-radius:4px;display:flex;align-items:center;gap:8px;}
+.lt-val{font-family:var(--font-m);font-size:16px;font-weight:600;color:var(--text-0)}
+.lt-lbl{font-size:9.5px;color:var(--text-2)}
+.lt-trend{font-size:10px;color:var(--green);margin-left:auto}
+
+/* KEYWORDS */
+.kw-table{width:100%;border-collapse:collapse;font-size:10.5px}
+.kw-table th{text-align:left;padding:3px 5px;font-family:var(--font-m);font-size:8.5px;color:var(--text-2);border-bottom:1px solid var(--border);letter-spacing:.5px;text-transform:uppercase;}
+.kw-table td{padding:4px 5px;border-bottom:1px solid rgba(59,130,246,.04)}
+.kw-table tr:hover td{background:var(--blue-g)}
+.kw-bar{display:inline-block;height:3px;border-radius:1px;vertical-align:middle}
+.kw-price{font-family:var(--font-m);color:var(--amber)}
+.ku{color:var(--green);font-family:var(--font-m);font-size:9.5px}
+.kd{color:var(--red);font-family:var(--font-m);font-size:9.5px}
+.kf{color:var(--text-2);font-family:var(--font-m);font-size:9.5px}
+
+/* MAP */
+#map-center{position:relative;overflow:hidden;background:var(--bg-0);border-left:1px solid var(--border);border-right:1px solid var(--border);}
+#globe-canvas{display:block;width:100%;height:100%}
+
+/* RIGHT COLUMN */
+.is-title{font-family:var(--font-h);font-size:10px;font-weight:600;letter-spacing:1px;color:var(--text-2);text-transform:uppercase;display:flex;align-items:center;gap:6px;margin-bottom:6px;margin-top:8px;}
+.is-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.trend-row{margin-bottom:5px}
+.tr-lbl{display:flex;justify-content:space-between;font-size:10px;margin-bottom:2px}
+.tr-track{height:3.5px;background:var(--bg-0);border-radius:2px;overflow:hidden}
+.tr-fill{height:100%;border-radius:2px;transition:width 1s ease}
+.tf-pos{background:linear-gradient(90deg,var(--blue),var(--cyan))}
+.tf-neg{background:linear-gradient(90deg,var(--red),var(--amber))}
+
+/* BOTTOM STRIP */
+#bot-strip{position:fixed;bottom:var(--bot-h);left:0;right:0;z-index:150;height:200px;background:rgba(4,8,16,0.95);border-top:1px solid var(--border);display:grid;grid-template-columns:var(--panel-w) 1fr var(--panel-w);backdrop-filter:blur(12px);transition:transform .3s ease;}
+.bs-panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border);}
+.bs-hdr{display:flex;align-items:center;gap:7px;padding:7px 10px 6px;border-bottom:1px solid var(--border);flex-shrink:0;font-family:var(--font-h);font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.bs-body{padding:8px 10px;overflow-y:auto;flex:1}
+
+/* STATUS BAR */
+#statusbar{position:fixed;bottom:0;left:0;right:0;z-index:200;height:var(--bot-h);background:rgba(4,8,16,0.98);border-top:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 14px;font-family:var(--font-m);font-size:9.5px;color:var(--text-2);}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1 style="text-align:center;margin-bottom:30px">EDU MONITOR v2</h1>
 
-  <div class="panel">
-    <h2>💼 今日岗位（jobs 表）</h2>
-    <div id="jobs" class="data">加载中...</div>
+<!-- LOADING SCREEN -->
+<div id="loader">
+  <div class="loader-logo">EDU<em>MONITOR</em></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+  <div class="loader-txt" id="loader-txt">CONNECTING TO SUPABASE...</div>
+</div>
+
+<!-- NOTIFICATIONS -->
+<div id="notif"></div>
+
+<!-- ALERT BANNER -->
+<div id="alert-banner">
+  <span class="alert-icon">⚠</span>
+  <span id="alert-text">异常预警：AI教研岗位激增 +40%，超过预警阈值</span>
+  <span style="margin-left:auto;cursor:pointer;opacity:.6" onclick="dismissAlert()">✕</span>
+</div>
+
+<!-- TOPBAR -->
+<div id="topbar">
+  <div class="tb-logo">
+    <div class="pulse-dot"></div>
+    EDU<em>MONITOR</em>
   </div>
-
-  <div class="panel">
-    <h2>📡 直播中（live 表）</h2>
-    <div id="live" class="data">加载中...</div>
-  </div>
-
-  <div class="panel">
-    <h2>🎯 关键词（keywords 表）</h2>
-    <div id="keywords" class="data">加载中...</div>
-  </div>
-
-  <div style="text-align:center;color:#666;margin-top:40px">
-    RLS 关闭后这里应该显示真实数据<br>
-    如果还有 401 错误，请把 Console 截图发给我
+  <div class="tb-sep"></div>
+  <div class="tb-stat">监控模块 <span class="tv">8</span></div>
+  <div class="tb-sep"></div>
+  <div class="tb-stat">数据源 <span class="tv">24</span></div>
+  <div class="tb-sep"></div>
+  <div class="tb-stat">直播中 <span class="tv tv-r" id="hd-live">0</span></div>
+  <div class="tb-sep"></div>
+  <div class="tb-stat">今日岗位 <span class="tv tv-g" id="hd-jobs">0</span></div>
+  <div class="tb-right">
+    <div class="chip chip-live">● LIVE</div>
+    <div class="chip chip-edu">EDU · v2</div>
+    <div id="tb-clock">--:--:-- CST</div>
   </div>
 </div>
 
+<!-- MAIN APP AREA -->
+<div id="app">
+  <!-- LEFT COLUMN -->
+  <div class="col col-l" style="overflow-y:auto">
+    <!-- Overview -->
+    <div id="overview">
+      <div class="ov-cell">
+        <div class="ov-val" id="ov-jobs" style="color:var(--blue)">0</div>
+        <div class="ov-lbl">今日岗位</div>
+        <div class="ov-delta d-up" id="ov-jobs-d">↑ 0</div>
+      </div>
+      <div class="ov-cell">
+        <div class="ov-val" id="ov-live" style="color:var(--red)">0</div>
+        <div class="ov-lbl">直播中</div>
+        <div class="ov-delta d-up">总观看 0</div>
+      </div>
+      <div class="ov-cell">
+        <div class="ov-val" id="ov-gh" style="color:var(--amber)">0</div>
+        <div class="ov-lbl">GitHub新项目</div>
+        <div class="ov-delta d-up">↑ 0</div>
+      </div>
+      <div class="ov-cell">
+        <div class="ov-val" id="ov-alert" style="color:var(--red)">0</div>
+        <div class="ov-lbl">异常预警</div>
+        <div class="ov-delta d-dn">0</div>
+      </div>
+    </div>
+
+    <!-- JOBS PANEL -->
+    <div class="panel" style="flex:0 0 auto">
+      <div class="panel-hdr">
+        <div class="ph-icon">💼</div>
+        <div class="ph-title">就业平台</div>
+        <div class="ph-badge b-ok" id="jp-badge">+0</div>
+      </div>
+      <div class="panel-body" style="max-height:320px">
+        <div class="job-filters" id="jfilters">
+          <div class="jf active" data-f="all" onclick="filterJ('all',this)">全部</div>
+          <div class="jf" data-f="boss" onclick="filterJ('boss',this)">BOSS</div>
+        </div>
+        <div class="job-list" id="job-list">加载中...</div>
+      </div>
+    </div>
+
+    <!-- LIVE PANEL -->
+    <div class="panel" style="flex:0 0 auto">
+      <div class="panel-hdr">
+        <div class="ph-icon">📡</div>
+        <div class="ph-title">品牌直播</div>
+        <div class="ph-badge b-live" id="lp-badge">● LIVE 0</div>
+      </div>
+      <div class="panel-body" style="max-height:250px">
+        <div id="live-rows">加载中...</div>
+      </div>
+    </div>
+
+    <!-- KEYWORDS PANEL -->
+    <div class="panel" style="flex:1 1 0;min-height:0">
+      <div class="panel-hdr">
+        <div class="ph-icon">🎯</div>
+        <div class="ph-title">关键词</div>
+        <div class="ph-badge b-ai">竞品雷达</div>
+      </div>
+      <div class="panel-body" style="overflow:hidden;padding-top:6px">
+        <table class="kw-table">
+          <thead><tr><th>关键词</th><th>热度</th><th>出价</th><th>变化</th></tr></thead>
+          <tbody id="kw-tbody">加载中...</tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER MAP -->
+  <div id="map-center">
+    <canvas id="globe-canvas"></canvas>
+  </div>
+
+  <!-- RIGHT COLUMN -->
+  <div class="col col-r" style="overflow-y:auto">
+    <!-- AI INSIGHT -->
+    <div class="panel" style="flex:0 0 auto">
+      <div class="panel-hdr">
+        <div class="ph-icon">🧠</div>
+        <div class="ph-title">AI洞察</div>
+        <div class="ph-badge b-ai">GPT-4o</div>
+      </div>
+      <div class="panel-body" style="max-height:310px">
+        <div style="color:var(--text-1);padding:20px;text-align:center;">AI洞察模块加载中...</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOTTOM STRIP -->
+<div id="bot-strip">
+  <div class="bs-panel">
+    <div class="bs-hdr"><span>🔥</span>GitHub Trending</div>
+    <div class="bs-body" id="gh-view">加载中...</div>
+  </div>
+</div>
+
+<div id="bot-toggle" onclick="toggleBot()">▼ 面板</div>
+
+<!-- STATUS BAR -->
+<div id="statusbar">
+  <div class="sb-item"><span class="sg">●</span> Supabase <span class="sg" id="supabase-status">CONNECTING</span></div>
+</div>
+
 <script>
-const BASE = 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1';
-const KEY = 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL';
+/* STATE MANAGEMENT */
+const State = {
+  jobs: [], jobFilter: 'all',
+  live: [], liveTotal: 0,
+  github: [], ghTab: 'trending',
+  keywords: [], kwTab: 'bid',
+  hotspot: {}, hsTab: 'hot',
+  videos: {}, vidTab: 'dy',
+  aiCards: [], activeTags: new Set(['教育','AI','直播']),
+  layers: { jobs:true, live:true, hubs:true, keywords:false, flow:false },
+  timeRange: '1d',
+  alerts: [],
+  botOpen: true,
+};
 
-async function getData(table) {
-  const res = await fetch(`${BASE}/${table}`, {
-    headers: { 'apikey': KEY, 'Authorization': `Bearer ${KEY}` }
-  });
-  if (!res.ok) return [];
-  return await res.json();
+/* API LAYER */
+const API = {
+  base: 'https://xaanwlwjumpcyyrdoeyg.supabase.co/rest/v1',
+
+  async get(path) {
+    try {
+      const response = await fetch(this.base + path, {
+        method: 'GET',
+        headers: {
+          'apikey': 'sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL',
+          'Authorization': 'Bearer sb_publishable_kAyJwSLtRGNraixm1Fk4hg_U0wL'
+        }
+      });
+
+      if (!response.ok) {
+        console.error(`❌ ${path} 返回 401/403 - 请确认 RLS 已关闭`);
+        document.getElementById('supabase-status').textContent = 'RLS 未关闭';
+        document.getElementById('supabase-status').style.color = 'var(--red)';
+        return [];
+      }
+
+      const data = await response.json();
+      console.log(`✅ ${path} 获取成功 (${data.length} 条)`);
+      return data;
+    } catch (error) {
+      console.error(`❌ 请求 ${path} 失败`, error);
+      return [];
+    }
+  },
+
+  getJobs:    () => API.get('/jobs'),
+  getLive:    () => API.get('/live'),
+  getGithub:  () => API.get('/github'),
+  getKeywords:() => API.get('/keywords'),
+  getHotspot: () => API.get('/hotspot'),
+  getVideos:  () => API.get('/video'),
+  getAlerts:  () => API.get('/alerts'),
+};
+
+/* MODULES */
+const Modules = [
+  { id:'jobs',     api:API.getJobs,     render:renderJobs },
+  { id:'live',     api:API.getLive,     render:renderLive },
+  { id:'github',   api:API.getGithub,   render:renderGithub },
+  { id:'keywords', api:API.getKeywords, render:renderKeywords },
+];
+
+/* RENDER FUNCTIONS */
+function renderJobs(data) {
+  State.jobs = Array.isArray(data) ? data : [];
+  const html = State.jobs.slice(0,6).map(j => `
+    <div class="ji">
+      <div class="ji-r1"><div class="ji-title">${j.title || '未知岗位'}</div></div>
+      <div class="ji-r2"><span>${j.company || ''}</span><span>📍${j.city || ''}</span><span class="ji-sal">${j.salary || ''}</span></div>
+    </div>
+  `).join('');
+  document.getElementById('job-list').innerHTML = html || '暂无岗位数据';
 }
 
-async function load() {
-  // 岗位
-  const jobs = await getData('jobs');
-  document.getElementById('jobs').innerHTML = jobs.length 
-    ? jobs.map(j => `<b>${j.title}</b> — ${j.company} (${j.city})<br>`).join('') 
-    : '<span class="empty">暂无岗位数据（请确认表中有数据且 RLS 已关闭）</span>';
-
-  // 直播
-  const live = await getData('live');
-  document.getElementById('live').innerHTML = live.length 
-    ? live.map(l => `${l.brand}：${l.viewers} 人 ${l.live ? '● LIVE' : ''}<br>`).join('') 
-    : '<span class="empty">暂无直播数据</span>';
-
-  // 关键词
-  const kw = await getData('keywords');
-  document.getElementById('keywords').innerHTML = kw.length 
-    ? kw.map(k => `${k.kw}（热度 ${k.heat}，出价 ¥${k.price}）<br>`).join('') 
-    : '<span class="empty">暂无关键词数据</span>';
+function renderLive(data) {
+  State.live = Array.isArray(data) ? data : [];
+  let total = 0;
+  const html = State.live.map(b => {
+    if (b.live) total += Number(b.viewers || 0);
+    return `<div class="live-row"><div class="ld ${b.live?'on':'off'}"></div><div class="live-brand">${b.brand || '未知'}</div><div class="live-v">👁 <b>${b.viewers || 0}</b></div></div>`;
+  }).join('');
+  document.getElementById('live-rows').innerHTML = html || '暂无直播数据';
+  document.getElementById('hd-live').textContent = State.live.filter(b => b.live).length;
 }
 
-load();
+function renderGithub(data) {
+  State.github = Array.isArray(data) ? data : [];
+  const view = document.getElementById('gh-view');
+  view.innerHTML = State.github.length ? State.github.map(r => `<div class="gh-row"><div style="font-size:11px;color:var(--blue)">${r.repo || '未知仓库'}</div></div>`).join('') : '暂无 GitHub 数据';
+}
+
+function renderKeywords(data) {
+  State.keywords = Array.isArray(data) ? data : [];
+  const html = State.keywords.map(k => `
+    <tr><td>${k.kw || '未知'}</td><td>${k.heat || 0}</td><td>¥${k.price || 0}</td><td>${k.chg || 0}%</td></tr>
+  `).join('');
+  document.getElementById('kw-tbody').innerHTML = html || '<tr><td colspan="4">暂无关键词数据</td></tr>';
+}
+
+/* BOOTSTRAP */
+async function bootstrap() {
+  const lt = document.getElementById('loader-txt');
+  const steps = ['连接 Supabase...', '加载岗位数据...', '加载直播数据...', '加载关键词...', '启动完成'];
+  for (let step of steps) {
+    lt.textContent = step;
+    await new Promise(r => setTimeout(r, 400));
+  }
+
+  for (let m of Modules) {
+    try {
+      const data = await m.api();
+      m.render(data);
+    } catch(e) {
+      console.warn(`${m.id} 加载失败`, e);
+    }
+  }
+
+  const loader = document.getElementById('loader');
+  loader.style.opacity = '0';
+  setTimeout(() => loader.style.display = 'none', 600);
+
+  console.log('🎉 Edu Monitor v2 完整版已启动');
+}
+
+document.addEventListener('DOMContentLoaded', bootstrap);
 </script>
 </body>
 </html>
